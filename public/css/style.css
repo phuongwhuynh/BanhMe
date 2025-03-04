@@ -1,0 +1,202 @@
+body {
+    display: flex;
+    flex-direction: column; 
+    min-height: 100vh;
+    width: 100%; 
+    height: 100vh; 
+    font-family: 'Trebuchet MS', sans-serif;
+    background-color: var(--brown1);   
+    color: var(--white);
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+header {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    color: var(--cream);
+    padding: 0.5rem;
+    text-align: center;
+    background-color: var(--brown3);
+}
+
+
+.logo-container{
+    flex:6;
+    display: flex;
+    align-items: center; 
+    justify-content: left; 
+}
+.logo {
+    margin-left: 1rem;
+    color: var(--cream);
+    font-weight: bolder;
+    font-size: xx-large;
+    text-decoration: none;
+
+}
+
+nav ul {
+    flex:3;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;    
+    list-style: none;
+    padding: 0 1rem;
+  }
+nav ul li {
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: inline;
+    
+    margin: 0 1rem;
+}
+nav ul li a {
+    color: var(--cream);
+    text-decoration: none;
+}
+.navbar-button {
+    transition: color 0.2s ease-in-out; 
+    position: relative; 
+}
+.navbar-button:hover {
+    color:var(--brown2);
+}
+.navbar-button:active {
+    color: var(--brown1);
+}
+.navbar-button.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+
+.login-container {
+    flex:1;
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    
+}
+.login-button {
+    color: var(--cream); 
+    font-weight: bold;
+    font-size: larger;
+    text-decoration: none;
+    background-color:  var(--brown2);
+    padding:1rem 2rem;
+    border-radius: 4px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: color 0.2s ease-in-out; 
+}
+.login-button:hover {
+    background-color: var(--brown1);
+}
+.login-button:active {
+    background-color: var(--brown2);
+}
+
+main {
+    flex: 1;
+}
+
+footer {
+    color: var(--brown1);
+    font-weight: bold;
+    padding-left:12px;
+    margin-top:auto;
+}
+
+
+@media (max-width: 1200px) {
+    .logo {
+        font-size: xx-large;
+    }
+    .brand-name {
+        font-size: 6rem;
+    }
+    .slogan {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .logo {
+        font-size: large;
+    }
+    .brand-name {
+        font-size: 5rem;
+    }
+    .slogan {
+        font-size: 1.6rem;
+    }
+    nav ul {
+        flex: 4;
+    }
+}
+
+
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+    header {
+        padding: 0rem;
+    }
+    .logo-container {
+        flex: 1;
+    }
+    .login-container {
+        flex: 1;
+    }
+    nav ul {
+        flex: 2;
+        flex-direction: column;
+        justify-content: flex-start; 
+        align-items: center;
+        margin: 0;
+    }
+    nav ul li {
+        margin: 0.5rem 0;
+    }
+    .login-button {
+        font-size: 1.2rem;
+        padding: 0.8rem 1.6rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .brand-name {
+        font-size: 4rem;
+    }
+    .slogan {
+        font-size: 1.4rem;
+    }
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+        padding-top: 0.5rem;
+    }
+    .navbar-button {
+        font-size: 1.4rem;
+    }
+    .login-button {
+        font-size: 1.1rem;
+        padding: 0.7rem 1.4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .brand-name {
+        font-size: 3.5rem;
+    }
+    .slogan {
+        font-size: 1.3rem;
+    }
+    .login-button {
+        font-size: 1.5rem;
+        padding: 0.6rem 1.2rem;
+    }
+}
