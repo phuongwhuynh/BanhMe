@@ -2,17 +2,16 @@
 
 <div id="sorting">
     <label>Sort by:</label>
-    <select id="sortSelect" onchange="fetchProducts(1)">
+    <select id="sortSelect" onchange="fetchProducts(currentPage)">
         <option value="name_asc">Name (A-Z)</option>
         <option value="name_desc">Name (Z-A)</option>
         <option value="price_asc">Price (Low-High)</option>
         <option value="price_desc">Price (High-Low)</option>
     </select>
-</div>
+</div></br>
 
 <!-- Product List -->
-<div id="product-list"></div>
-
+<div id="product-list" class="products-container"></div>
 <!-- Pagination -->
 <div id="pagination" class="pagination">
     <button id="prevPage" class="fixed-nav">&#8592; Prev</button>
@@ -20,16 +19,23 @@
     <button id="nextPage" class="fixed-nav">Next &#8594;</button>
 </div>
 
+<!-- Modal -->
+<div class="product-modal" id="productModal">
+    <div class="modal-content">
+        <p id="modal-image">imagePath</p>
+        <p id="modal-name">name</p>
+        <p id="modal-price">price</p>
+        <p id="modal-description">description</p>
+    </div>
+    <button class="close-modal" onclick="document.getElementById('productModal').style.display='none'">Close</button>
+</div>
 <script>
 let currentPage = 1;
-const limit = 12;
+const limit = 6;
 const maxVisiblePages = 5; 
-
 function fetchProducts(page = 1) {
     const sort = document.getElementById("sortSelect").value; // Get sort option
     const xhr = new XMLHttpRequest();
-    console.log(page)
-    console.log(limit)
     xhr.open("GET", `index.php?page=order&ajax=1&pageNum=${page}&limit=${limit}&sort=${sort}`, true);
 
     xhr.onreadystatechange = function () {
@@ -45,10 +51,16 @@ function fetchProducts(page = 1) {
 
             // Add products
             data.products.forEach(product => {
-                productList.innerHTML += `<div>${product.name} - ${product.price}</div>`;
+                productList.innerHTML += 
+                    `<button class="product-card" 
+                        onClick="openModal('${product.image_path}','${product.name}','${product.price}','${product.description}')">
+                        <img src="/${product.image_path}">
+                        ${product.name} - ${product.price}
+                    </button>`;
             });
 
-            const totalPages = data.totalPages;
+            // const totalPages = data.totalProducts/limit;
+            const totalPages=data.totalPages;
 
             // Handle "Previous" button
             prevPage.disabled = (page === 1);
@@ -85,8 +97,15 @@ function fetchProducts(page = 1) {
             currentPage = page;
         }
     };
-
     xhr.send();
+}
+
+function openModal(image_path, name, price, description) {
+    document.getElementById("modal-image").textContent=image_path;
+    document.getElementById("modal-name").textContent=name;
+    document.getElementById("modal-price").textContent=price;
+    document.getElementById("modal-description").textContent=description;
+    document.getElementById("productModal").style.display="flex";
 }
 
 function createPageButton(page, isActive = false) {
@@ -110,6 +129,19 @@ fetchProducts();
 </script>
 
 <style>
+    .products-container {
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        grid-template-rows: repeat(2,auto);
+        gap:10px;
+        padding:10px;
+    }
+    .product-modal {
+        display: none;
+    }
+    .product-card {
+        color: var(--brown4);
+    }
     .pagination {
         display: flex;
         align-items: center;

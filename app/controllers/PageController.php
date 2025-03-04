@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__DIR__) . "/controllers/OrderController.php"; // Include OrderController
+require_once dirname(__DIR__) . "/controllers/OrderController.php"; 
 
 class PageController {
     private static $orderController;
@@ -11,22 +11,22 @@ class PageController {
 
     public static function loadPage($page) {
         $allowedPages = ["home", "order", "activity", "history"];
-        $data = []; // Initialize data array
+        $data = []; 
 
         if (!in_array($page, $allowedPages)) {
             $page = "404";
         }
 
         if ($page === "order" && isset($_GET['ajax'])) {
-            // self::handlePagination();
             self::$orderController->handlePagination();
             exit;
         }
 
-        if ($page === "order") {
-            $totalProducts = self::$orderController->countOrders();
-            $data['totalPages'] = ceil($totalProducts / 12);
-        }
+        // if ($page === "order") {
+        //     $totalProducts = self::$orderController->countOrders();
+        //     $data['totalProducts']=$totalProducts;
+        //     $data['totalPages']=ceil($totalProducts/6);
+        // }
 
         self::loadView($page, $data);
     }
