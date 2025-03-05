@@ -27,10 +27,11 @@
         <p id="modal-name">name</p>
         <p id="modal-price">price</p>
         <p id="modal-description">description</p>
+        <input type="hidden" id="modal-item-id" name="item_id">
         <button id="increase-quantity" onclick="decreaseQuantity()">&#8722;</button>
         <input type="number" id="quantity" value="1" min="1">
         <button id="decrease-quantity" onclick="increaseQuantity()">&#43;</button>
-        <button id="cart-submit">Thêm vào giỏ hàng</button>
+        <button id="cart-submit" onclick="addCart()">Thêm vào giỏ hàng</button>
         <button class="close-modal" onclick="document.getElementById('productModal').style.display='none'">Close</button>
     </div>
 </div>
@@ -61,7 +62,7 @@ function fetchProducts(page = 1) {
             data.products.forEach(product => {
                 productList.innerHTML += 
                     `<button class="product-card" 
-                        onClick="openModal('${product.image_path}','${product.name}','${product.price}','${product.description}')">
+                        onClick="openModal('${product.item_id}','${product.image_path}','${product.name}','${product.price}','${product.description}')">
                         <img src="public/${product.image_path}" class="card-image"">
                         ${product.name} - ${product.price}
                     </button>`;
@@ -108,7 +109,8 @@ function fetchProducts(page = 1) {
     xhr.send();
 }
 
-function openModal(image_path, name, price, description) {
+function openModal(item_id,image_path, name, price, description) {
+    document.getElementById("modal-item-id").value = item_id;
     document.getElementById("modal-image").textContent=image_path;
     document.getElementById("modal-name").textContent=name;
     document.getElementById("modal-price").textContent=price;
@@ -143,6 +145,14 @@ function decreaseQuantity() {
     }
 };
 
+function addCart() {
+    let item_id=document.getElementById("modal-item-id").value;
+    let quantity=document.getElementById("quantity").value;
+
+    let xhr=new XMLHttpRequest();
+    xhr.open("POST", "index.php?controller=order&action=add",true);
+    
+}
 
 
 </script>

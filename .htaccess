@@ -10,7 +10,6 @@ DirectoryIndex public/index.php
 RewriteCond %{REQUEST_URI} ^/public/(.*)$ [NC]
 RewriteRule ^public/(.*)$ /$1 [L,R=301]
 
-# Allow direct access to static files (CSS, JS, images)
 
 # Redirect all other requests to public/index.php
 RewriteCond %{REQUEST_FILENAME} !-f

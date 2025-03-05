@@ -4,14 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bánh Me! - <?php echo ucfirst($page); ?></title>
-  <link rel="stylesheet" href="/mywebsite/public/css/variables.css">
-  <link rel="stylesheet" href="/mywebsite/public/css/style.css">
+  <link rel="stylesheet" href="public/css/variables.css">
+  <link rel="stylesheet" href="public/css/style.css">
 
   <?php 
-    $cssWebPath = "/mywebsite/public/css/$page.css"; 
-    if (file_exists($_SERVER['DOCUMENT_ROOT'] . $cssWebPath)) : ?>
-      <link rel="stylesheet" href="<?php echo $cssWebPath; ?>">
-  <?php endif; ?>
+    $cssWebPath = "public/css/$page.css"; 
+  ?>
+  <link rel="stylesheet" href="<?php echo $cssWebPath; ?>">
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
