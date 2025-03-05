@@ -17,7 +17,7 @@
 </head>
 <body>
   <header>
-    <div class="logo-container">
+    <div class="left-header">
       <a href="index.php?page=home" class="logo">Bánh Me!</a>
     </div>
     <nav>
@@ -28,8 +28,11 @@
       <li><a href="index.php?page=history" class="navbar-button <?php echo ($page == 'history') ? 'active' : ''; ?>">History</a></li>
       </ul>
     </nav>
-    <div class="login-container">
-      <a href="index.php?page=home" class="login-button">Login</a>
+    <div class="right-header"> 
+        <a href="index.php?page=home">
+          <img class="cart-image" src="public/images/cart.png">
+        </a>
+        <a href="index.php?page=home" class="login-button">Login</a>
     </div>
   </header>
 
@@ -42,3 +45,4 @@
   </footer>
 </body>
 </html>
+

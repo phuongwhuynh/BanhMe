@@ -4,7 +4,7 @@ use banh_mi_db;
 
 drop table if exists accounts;
 create table accounts (
-	username varchar(255) primary key,
+	username varchar(50) primary key,
     password_hash varchar(255) not null,
     role ENUM('user','admin') not null,
     status ENUM('active','deleted') not null
@@ -16,7 +16,7 @@ insert into accounts (username,password_hash,role,status) values
 
 drop table if exists menu;
 create table menu (
-	item_id int primary key AUTO_INCREMENT,
+	item_id int unsigned primary key AUTO_INCREMENT,
     name VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
 	description TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
     image_path VARCHAR(512), 
@@ -107,20 +107,19 @@ INSERT INTO menu (name, description, image_path, price) VALUES
 
 drop table if exists orders;
 create table orders (
-	order_id int primary key AUTO_INCREMENT,
+	order_id int unsigned primary key AUTO_INCREMENT,
     status ENUM('in progress','delivered') not null,
     total_price DECIMAL(12,0),
-    username varchar(255),
+    username varchar(50),
     FOREIGN KEY(username) references accounts(username) on delete set null,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 drop table if exists orders_include_items;
 create table orders_include_items (
-	order_id int not null, 
-    item_id int not null,
+	order_id int unsigned not null, 
+    item_id int unsigned not null,
     quantity int check (quantity>0),
-    note TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
 	PRIMARY KEY(order_id,item_id),
 	FOREIGN KEY(order_id) references orders(order_id),
     FOREIGN KEY(item_id) references menu(item_id)
@@ -146,3 +145,9 @@ END;
 
 DELIMITER ;
 
+drop table if exists in_cart;
+create table in_cart (
+	username varchar(255),
+    item_id int unsigned,
+    quantity int
+    );
