@@ -27,11 +27,14 @@
         <p id="modal-name">name</p>
         <p id="modal-price">price</p>
         <p id="modal-description">description</p>
-        <input type="hidden" id="modal-item-id" name="item_id">
-        <button id="increase-quantity" onclick="decreaseQuantity()">&#8722;</button>
-        <input type="number" id="quantity" value="1" min="1">
-        <button id="decrease-quantity" onclick="increaseQuantity()">&#43;</button>
-        <button id="cart-submit" onclick="addCart()">Thêm vào giỏ hàng</button>
+        <form id="cart-form" onsubmit="addCart(event)">
+            <input type="hidden" id="modal-item-id" name="item_id">
+            <button id="increase-quantity" onclick="decreaseQuantity()">&#8722;</button>
+            <input type="number" id="quantity" value="1" min="1">
+            <button id="decrease-quantity" onclick="increaseQuantity()">&#43;</button>
+            <button id="cart-submit" type="submit">Thêm vào giỏ hàng</button>
+        </form>
+
         <button class="close-modal" onclick="document.getElementById('productModal').style.display='none'">Close</button>
     </div>
 </div>
@@ -145,13 +148,31 @@ function decreaseQuantity() {
     }
 };
 
-function addCart() {
-    let item_id=document.getElementById("modal-item-id").value;
-    let quantity=document.getElementById("quantity").value;
+function addCart(event) {
+    event.preventDefault(); //prevents form from refreshing the page
+
+    let form = document.getElementById("cart-form");
+    let formData = new FormData(form); 
 
     let xhr=new XMLHttpRequest();
     xhr.open("POST", "index.php?controller=order&action=add",true);
-    
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState==4){
+            if (xhr.status==200){
+                let response=JSON.parse(xhr.responseText);
+                if (response.success) {
+                    alert("Item added to cart successfully!");
+                }
+                else {
+                    alert("Error " + response.message);
+                }
+            }
+            else {
+                alert("Request failed with status: " + xhr.status)
+            }
+        }
+    }
+    xhr.send(formData);     
 }
 
 

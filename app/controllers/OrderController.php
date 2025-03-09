@@ -2,16 +2,16 @@
 require_once dirname(__DIR__) . "/models/Order.php";
 
 class OrderController {
-    public function index() {
+    public static function index() {
         return Order::getAll();
     }
-    public function countOrders() {
+    public static function countOrders() {
         return Order::countAll();
     }
-    public function getPaginated($page =1, $limit=6, $sort) {
+    public static function getPaginated($page =1, $limit=6, $sort) {
         return Order:: getPaginated($page,$limit,$sort);
     }
-    public function handlePagination() {
+    public static function handlePagination() {
         $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 6;
         $page = isset($_GET['pageNum']) ? (int)$_GET['pageNum'] : 1;
         $sort = isset($_GET['sort']) ? $_GET['sort'] : "name_asc";
