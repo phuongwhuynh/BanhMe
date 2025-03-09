@@ -1,17 +1,16 @@
 <?php
 
-require_once '../app/controllers/PageController.php';
-require_once '../app/controllers/OrderController.php';
+require_once '../app/include/config.php';
 
-$page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
-if ($page === "order" && isset($_GET['ajax'])) {
-    OrderController::handlePagination();
-    exit;
+if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET['ajax']) && $_GET['ajax']==1){
+    $controller[$_GET['controller']]::{$_GET['action']}();
 }
-else if (isset($_POST['controller'])){
-    
+else if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['ajax'])&& $_POST['ajax']==1){
+    $controller[$_POST['controller']]::{$_POST['action']}();
 }
-
-PageController::loadPage($page);
+else {
+    $page = isset($_GET['page']) ? $_GET['page'] : 'home';
+    PageController::loadPage($page);
+}
 ?>

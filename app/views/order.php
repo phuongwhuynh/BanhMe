@@ -1,6 +1,6 @@
 <h2>Order Page</h2>
 
-<div id="sorting">
+<div id="sorting" class="sort-container">
     <label>Sort by:</label>
     <select id="sortSelect" onchange="fetchProducts(currentPage)">
         <option value="name_asc">Name (A-Z)</option>
@@ -9,6 +9,10 @@
         <option value="price_desc">Price (High-Low)</option>
     </select>
 </div>
+
+<button data-category="savory" class="toggle on" onclick="cateToggle(this)">Bánh Mì Mặn</button>
+<button data-category="sweet" class="toggle on" onclick="cateToggle(this)">Bánh Mì Ngọt</button>
+<button data-category="raw" class="toggle on" onclick="cateToggle(this)">Bánh Mì Nguyên Bản</button>
 
 <!-- Product List -->
 <div id="product-list" class="products-container"></div>
@@ -29,9 +33,9 @@
         <p id="modal-description">description</p>
         <form id="cart-form" onsubmit="addCart(event)">
             <input type="hidden" id="modal-item-id" name="item_id">
-            <button id="increase-quantity" onclick="decreaseQuantity()">&#8722;</button>
-            <input type="number" id="quantity" value="1" min="1">
-            <button id="decrease-quantity" onclick="increaseQuantity()">&#43;</button>
+            <button type="button" id="increase-quantity" onclick="decreaseQuantity()">&#8722;</button>
+            <input type="number" id="quantity" name="quantity" value="1" min="1">
+            <button type="button" id="decrease-quantity" onclick="increaseQuantity()">&#43;</button>
             <button id="cart-submit" type="submit">Thêm vào giỏ hàng</button>
         </form>
 
@@ -42,13 +46,20 @@
 let currentPage = 1;
 const limit = 6;
 const maxVisiblePages = 5; 
+let debounceTimer;
 
 
 fetchProducts();
 function fetchProducts(page = 1) {
-    const sort = document.getElementById("sortSelect").value; // Get sort option
+    const sort = document.getElementById("sortSelect").value; 
+    let selectedCategories = [];
+    document.querySelectorAll(".toggle.on").forEach(btn => {
+        selectedCategories.push(btn.getAttribute("data-category"));
+    });
+    const categoryQuery = selectedCategories.length ? `&categories=${selectedCategories.join(",")}` : "";
+
     const xhr = new XMLHttpRequest();
-    xhr.open("GET", `index.php?page=order&ajax=1&pageNum=${page}&limit=${limit}&sort=${sort}`, true);
+    xhr.open("GET", `index.php?ajax=1&controller=order&action=handlePagination&pageNum=${page}&limit=${limit}&sort=${sort}${categoryQuery}`, true);
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
@@ -112,6 +123,12 @@ function fetchProducts(page = 1) {
     xhr.send();
 }
 
+function cateToggle(button) {
+    button.classList.toggle("on"); 
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => fetchProducts(currentPage), 300);
+
+}
 function openModal(item_id,image_path, name, price, description) {
     document.getElementById("modal-item-id").value = item_id;
     document.getElementById("modal-image").textContent=image_path;
@@ -155,7 +172,15 @@ function addCart(event) {
     let formData = new FormData(form); 
 
     let xhr=new XMLHttpRequest();
-    xhr.open("POST", "index.php?controller=order&action=add",true);
+    xhr.open("POST", "index.php",true);
+    formData.append("ajax", "1");
+    formData.append("controller", "order");
+    formData.append("action", "addCart");
+
+    xhr.timeout = 5000; // 5 seconds
+    xhr.ontimeout=function() {
+        alert("Request timed out. Please try again.");
+    }
     xhr.onreadystatechange = function () {
         if (xhr.readyState==4){
             if (xhr.status==200){
@@ -164,7 +189,7 @@ function addCart(event) {
                     alert("Item added to cart successfully!");
                 }
                 else {
-                    alert("Error " + response.message);
+                    alert(response.message);
                 }
             }
             else {
@@ -179,6 +204,29 @@ function addCart(event) {
 </script>
 
 <style>
+    .sort-container {
+        margin: 8px;
+    }
+    .toggle {
+        width: 100px;
+        height: 40px;
+        background-color: #444; /* Dark Gray */
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        /* ON state (Bright) */
+    .toggle.on {
+        background-color: #ffcc00; /* Bright Yellow */
+        color: black;
+        box-shadow: 0 0 15px rgba(255, 204, 0, 0.8);
+    }
+
     .products-container {
         display: grid;
         grid-template-columns: repeat(3,1fr);
