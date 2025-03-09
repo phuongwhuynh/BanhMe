@@ -1,1 +1,1 @@
-<h1>Activity Page</h1>
+<h1>Hoạt động</h1>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,10 +9,11 @@
 
   <?php 
     $cssWebPath = "public/css/$page.css"; 
+    $jsPath="public/js/$page.js";
   ?>
   <link rel="stylesheet" href="<?php echo $cssWebPath; ?>">
-
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="<?php echo $jsPath?>" defer></script>
 </head>
 <body>
   <header>
@@ -21,27 +22,24 @@
     </div>
     <nav>
       <ul>
-      <li><a href="index.php?page=home" class="navbar-button <?php echo ($page == 'home') ? 'active' : ''; ?>">Home</a></li>
-      <li><a href="index.php?page=order" class="navbar-button <?php echo ($page == 'order') ? 'active' : ''; ?>">Order</a></li>
-      <li><a href="index.php?page=activity" class="navbar-button <?php echo ($page == 'activity') ? 'active' : ''; ?>">Activity</a></li>
-      <li><a href="index.php?page=history" class="navbar-button <?php echo ($page == 'history') ? 'active' : ''; ?>">History</a></li>
+      <li><a href="index.php?page=home" class="navbar-button <?php echo ($page == 'home') ? 'active' : ''; ?>">Trang chủ</a></li>
+      <li><a href="index.php?page=order" class="navbar-button <?php echo ($page == 'order') ? 'active' : ''; ?>">Đặt hàng </a></li>
+      <li><a href="index.php?page=activity" class="navbar-button <?php echo ($page == 'activity') ? 'active' : ''; ?>">Hoạt động</a></li>
+      <li><a href="index.php?page=history" class="navbar-button <?php echo ($page == 'history') ? 'active' : ''; ?>">Lịch sử </a></li>
       </ul>
     </nav>
     <div class="right-header"> 
         <a href="index.php?page=home">
           <img class="cart-image" src="public/images/cart.png">
         </a>
-        <a href="index.php?page=home" class="login-button">Login</a>
+        <a href="index.php?page=home" class="login-button">Đăng nhập</a>
     </div>
   </header>
+  <?php include($content); ?>
 
-  <main>
-      <?php include($content); ?>
-  </main>
 
-  <footer>
-    <p>&copy; 2025 Bánh Me! All Rights Reserved.</p>
-  </footer>
+
+
 </body>
 </html>
 
