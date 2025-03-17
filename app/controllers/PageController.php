@@ -1,43 +1,38 @@
 <?php
 
-require_once dirname(__DIR__) . "/controllers/OrderController.php"; 
-
 class PageController {
-    // public static $orderController;
 
-    // public static function init() {
-    //     self::$orderController = new OrderController();
-    // }
 
     public static function loadPage($page) {
-        $allowedPages = ["home", "order", "activity", "history"];
-        // $data = []; 
-
-        if (!in_array($page, $allowedPages)) {
-            $page = "404";
+        if ($_SESSION['user_role']==='student'){
+            //to-do
         }
-
-        // if ($page === "order" && isset($_GET['ajax'])) {
-        //     self::$orderController->handlePagination();
-        //     exit;
-        // }
-
-        // if ($page === "order") {
-        //     $totalProducts = self::$orderController->countOrders();
-        //     $data['totalProducts']=$totalProducts;
-        //     $data['totalPages']=ceil($totalProducts/6);
-        // }
-
-        self::loadView($page);
+        else if ($_SESSION['user_role']==='teacher'){
+            //to-do
+        }
+        else {
+            self::loadGuestView($page);
+        }
     }
 
-    private static function loadView($page) {
-        // extract($data); 
-        $content =  "../app/views/$page.php";
-        require_once "../app/views/layout.php";
+    private static function loadGuestView($page) {
+        $allowedPages = ["home", "order", "activity", "history"];
+        if (!in_array($page, $allowedPages)) {
+            require_once "../app/views/404.php";
+        }
+        else {
+            $content =  "../app/views/guest/$page.php";
+            require_once "../app/views/guest/layout.php";
+        }
     }
 
-    
+    private static function loadUserView($page){
+        /*to do*/
+    }
+    private static function loadAdminView($page){
+        /*to do*/
+
+    }
 }
 
 ?>
