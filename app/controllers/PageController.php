@@ -4,10 +4,10 @@ class PageController {
 
 
     public static function loadPage($page) {
-        if ($_SESSION['user_role']==='student'){
+        if ($_SESSION['user_role']==='user'){
             //to-do
         }
-        else if ($_SESSION['user_role']==='teacher'){
+        else if ($_SESSION['user_role']==='admin'){
             //to-do
         }
         else {
@@ -16,7 +16,7 @@ class PageController {
     }
 
     private static function loadGuestView($page) {
-        $allowedPages = ["home", "order","login"];
+        $allowedPages = ["home", "order","contact","login"];
         if (!in_array($page, $allowedPages)) {
             require_once "../app/views/404.php";
         }
