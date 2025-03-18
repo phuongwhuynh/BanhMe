@@ -24,15 +24,15 @@
       <ul>
       <li><a href="index.php?page=home" class="navbar-button <?php echo ($page == 'home') ? 'active' : ''; ?>">Trang chủ</a></li>
       <li><a href="index.php?page=order" class="navbar-button <?php echo ($page == 'order') ? 'active' : ''; ?>">Đặt hàng </a></li>
-      <!-- <li><a href="index.php?page=activity" class="navbar-button <?php echo ($page == 'activity') ? 'active' : ''; ?>">Hoạt động</a></li>
-      <li><a href="index.php?page=history" class="navbar-button <?php echo ($page == 'history') ? 'active' : ''; ?>">Lịch sử </a></li> -->
+      <li><a href="index.php?page=activity" class="navbar-button <?php echo ($page == 'activity') ? 'active' : ''; ?>">Hoạt động</a></li>
+      <li><a href="index.php?page=history" class="navbar-button <?php echo ($page == 'history') ? 'active' : ''; ?>">Lịch sử </a></li>
       </ul>
     </nav>
     <div class="right-header"> 
-        <!-- <a href="index.php?page=home">
+        <a href="index.php?page=home">
           <img class="cart-image" src="public/images/cart.png">
-        </a> -->
-        <a href="index.php?page=login" class="login-button">Đăng nhập</a>
+        </a>
+        <a href="index.php?page=home" class="login-button">Đăng nhập</a>
     </div>
   </header>
   <?php include($content); ?>
