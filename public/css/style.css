@@ -1,7 +1,7 @@
 body {
     display: flex;
     flex-direction: column; 
-    min-height: 100vh;
+    height: 100vh;
     width: 100vw; 
     font-family: 'Trebuchet MS', sans-serif;
     background-color: var(--brown1);   
@@ -80,7 +80,11 @@ nav ul li a {
     align-items: center;
 }
 
-
+.content-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
 
 
 .cart-image {
@@ -110,16 +114,8 @@ nav ul li a {
     background-color: var(--brown2);
 }
 
-main {
-    flex: 1;
-}
 
-footer {
-    color: var(--brown1);
-    font-weight: bold;
-    padding-left:12px;
-    margin-top:auto;
-}
+
 
 
 @media (max-width: 1200px) {

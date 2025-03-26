@@ -60,19 +60,34 @@ class Order {
         return $items;
     }
     
-    public static function countAll() {
+    public static function countAll($categories = []) {
         $db = Database::connect();
-        $result = $db->query("SELECT COUNT(*) as total FROM menu");
-        return $result->fetch_assoc()['total'];
+        $query = "SELECT COUNT(*) as total FROM menu";
+    
+        if (!empty($categories)) {
+            $placeholders = implode(",", array_fill(0, count($categories), "?"));
+            $query .= " WHERE cate IN ($placeholders)";
+        }
+    
+        $stmt = $db->prepare($query);
+    
+        if (!empty($categories)) {
+            $stmt->bind_param(str_repeat("s", count($categories)), ...$categories);
+        }
+    
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+    
+        return $result['total'] ?? 0; // Return the total count
     }
-
-    public static function addCart($username, $item_id, $quantity) {
+    
+    public static function addCart($user_id, $item_id, $quantity) {
         try {
             $db = Database::connect();
             $old_quantity=null;
             // check if item already exists in the user's cart
-            $stmt = $db->prepare("SELECT quantity FROM in_cart WHERE username = ? AND item_id = ?");
-            $stmt->bind_param("si", $username, $item_id); // Bind parameters (string, integer)
+            $stmt = $db->prepare("SELECT quantity FROM in_cart WHERE user_id = ? AND item_id = ?");
+            $stmt->bind_param("ii", $user_id, $item_id); // Bind parameters (string, integer)
             $stmt->execute();
             $stmt->bind_result($old_quantity);
             $stmt->fetch();
@@ -80,11 +95,11 @@ class Order {
                             
             if ($old_quantity !== null) {
                 $newQuantity = $old_quantity + $quantity;
-                $stmt = $db->prepare("UPDATE in_cart SET quantity = ? WHERE username = ? AND item_id = ?");
-                $stmt->execute([$newQuantity, $username, $item_id]);
+                $stmt = $db->prepare("UPDATE in_cart SET quantity = ? WHERE user_id = ? AND item_id = ?");
+                $stmt->execute([$newQuantity, $user_id, $item_id]);
             } else {
-                $stmt = $db->prepare("INSERT INTO in_cart (username, item_id, quantity) VALUES (?, ?, ?)");
-                $stmt->execute([$username, $item_id, $quantity]);
+                $stmt = $db->prepare("INSERT INTO in_cart (user_id, item_id, quantity) VALUES (?, ?, ?)");
+                $stmt->execute([$user_id, $item_id, $quantity]);
             }
     
             return ["success" => true];

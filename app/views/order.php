@@ -36,7 +36,6 @@
   </div>
 </div>
 <!-- Modal -->
-</div>
 <div class="product-modal" id="productModal">
   <div class="modal-content">
     <img src="" id="modal-image" class="modal-image">
@@ -59,3 +58,4 @@
 
     <button class="close-modal" onclick="document.getElementById('productModal').style.display='none'">X</button>
   </div>
+</div>

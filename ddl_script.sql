@@ -4,7 +4,8 @@ use banh_mi_db;
 
 drop table if exists accounts;
 create table accounts (
-	username varchar(50) primary key,
+	user_id int unsigned primary key auto_increment primary key,
+	username varchar(50) unique not null,
     password_hash varchar(255) not null,
     role ENUM('user','admin') not null,
     status ENUM('active','deleted') not null
@@ -52,8 +53,8 @@ create table orders (
 	order_id int unsigned primary key AUTO_INCREMENT,
     status ENUM('in progress','delivered') not null,
     total_price DECIMAL(12,0),
-    username varchar(50),
-    FOREIGN KEY(username) references accounts(username) on delete set null,
+    user_id int unsigned,
+    FOREIGN KEY(user_id) references accounts(user_id) on delete set null,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -89,7 +90,8 @@ DELIMITER ;
 
 drop table if exists in_cart;
 create table in_cart (
-	username varchar(255),
+	user_id int unsigned primary key,
     item_id int unsigned,
-    quantity int
-    );
+    quantity int,
+    foreign key(user_id) references accounts(user_id)
+);

@@ -5,8 +5,8 @@ class OrderController {
     public static function index() {
         return Order::getAll();
     }
-    public static function countOrders() {
-        return Order::countAll();
+    public static function countOrders($categories) {
+        return Order::countAll($categories);
     }
     public static function getPaginated($page =1, $limit=6, $sort, $categories) {
         return Order:: getPaginated($page,$limit,$sort, $categories);
@@ -18,7 +18,8 @@ class OrderController {
         $categories=isset($_GET['categories']) ?explode(",", $_GET["categories"]) : [];
 
         $orders = self::getPaginated($page, $limit, $sort, $categories);
-        $totalProducts = self::countOrders();
+        $totalProducts = self::countOrders($categories);
+
         $totalPages = ceil($totalProducts / $limit);
     
         header('Content-Type: application/json');
@@ -28,7 +29,12 @@ class OrderController {
         ]);
     }
     public static function addCart() {
-        $username=$_SESSION["user"];
+        if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'user') {
+            echo json_encode(["success" => false, "message" => "Unauthorized"]);
+            exit();
+        }
+
+        $username=$_SESSION["user_id"];
         $quantity=$_POST["quantity"];
         $item_id=$_POST["item_id"];
         $response=Order::addCart($username, $item_id, $quantity);

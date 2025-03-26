@@ -31,10 +31,14 @@ function fetchProducts(page = 1) {
             data.products.forEach(product => {
                 productList.innerHTML += 
                     `<div class="product-card"
-                    onClick="openModal('${product.item_id}','${product.image_path}','${product.name}','${product.price}','${product.description}')">
-                        <img class="card-image" src="public/${product.image_path}" class="card-image"">
+                        onClick="openModal('${product.item_id}','${product.image_path}','${product.name}','${product.price}','${product.description}')">
+                        
+                        <div class="image-container">
+                            <img class="card-image" src="public/${product.image_path}" alt="${product.name}">
+                        </div>
+            
                         <div class="product-name-container">
-                        ${product.name} 
+                            ${product.name} 
                         </div>
                         <div class="product-price-container">
                             ${Math.round(product.price).toLocaleString('vi-VN')} VND
@@ -86,7 +90,8 @@ function fetchProducts(page = 1) {
 function cateToggle(button) {
     button.classList.toggle("on"); 
     clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => fetchProducts(currentPage), 300);
+    currentPage=1;
+    debounceTimer = setTimeout(() => fetchProducts(1), 300);
 
 }
 function openModal(item_id, image_path, name, price, description) {
@@ -157,7 +162,13 @@ function addCart(event) {
                     alert("Item added to cart successfully!");
                 }
                 else {
-                    alert(response.message);
+                    if (response.message === "Unauthorized") {
+                        alert("You must be logged in as a user to add items to the cart.");
+                        window.location.href = "index.php?page=login";
+                    } 
+                    else {
+                        alert(response.message);
+                    }
                 }
             }
             else {
