@@ -1,6 +1,8 @@
 <?php
 require_once "Database.php";
-class Model {
-    
+class User {
+    static public function abc() {
+        
+    }
 }
 ?>

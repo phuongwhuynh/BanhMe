@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__DIR__) . "/models/Order.php";
+require_once "../app/models/Order.php";
 
 class OrderController {
     public static function index() {
@@ -28,7 +28,7 @@ class OrderController {
         ]);
     }
     public static function addCart() {
-        $username="user";
+        $username=$_SESSION["user"];
         $quantity=$_POST["quantity"];
         $item_id=$_POST["item_id"];
         $response=Order::addCart($username, $item_id, $quantity);
