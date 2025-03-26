@@ -19,7 +19,7 @@ function login(event){
   let xhr=new XMLHttpRequest();
   xhr.open("POST", "index.php",true);
   formData.append("ajax",1);
-  formData.append("controller","login");
+  formData.append("controller","user");
   formData.append("action","loginAttempt")
   xhr.timeout = 5000; // 5 seconds
     xhr.ontimeout=function() {

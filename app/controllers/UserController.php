@@ -1,6 +1,6 @@
 <?php
 require_once "../app/models/User.php";
-class LoginController {
+class UserController {
     public static function loginAttempt() {
         $username=$_POST["username"];
         $password=$_POST["password"];
@@ -9,7 +9,7 @@ class LoginController {
         echo json_encode($response);
 
     }
-    public static function logout() {
+    public static function logOut() {
         session_unset(); 
         session_destroy(); 
         echo json_encode(["success" => true]); 

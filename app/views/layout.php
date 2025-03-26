@@ -60,13 +60,30 @@
         }
         
         function logout() {
-            fetch('logout.php', { method: 'POST' })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        window.location.href = "index.php?page=home"; // Redirect to home
+            console.log(1234);
+            let xhr=new XMLHttpRequest();
+            xhr.open("POST", "index.php?ajax=1&controller=user&action=logOut",true);
+            xhr.timeout = 5000; // 5 seconds
+            xhr.ontimeout=function() {
+                alert("Request timed out. Please try again.");
+            }
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState==4){
+                    if (xhr.status==200){
+                        let response=JSON.parse(xhr.responseText);
+                        if (response.success) {
+                            window.location.href = "index.php?page=home";
+                        }
+                        else {
+                            alert(response.message);
+                        }
                     }
-                });
+                    else {
+                        alert("Request failed with status: " + xhr.status)
+                    }
+                }
+            }
+            xhr.send();     
         }
 
         window.onclick = function(event) {
@@ -104,7 +121,7 @@
             </div>
             <div class="dropdown-menu" id="dropdown-menu">
               <p>Xin chào, <?= $_SESSION['username']; ?>!</p>
-              <a href="#" onclick="logout()">Đăng xuất</a>
+              <button onclick="logout()">Đăng xuất</button>
             </div>
           </div>
       <?php else: ?>
