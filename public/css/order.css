@@ -107,8 +107,7 @@
 }
 
 .right-container {
-    /* width: 100vw; 
-    height: 100vh; */
+    width: 100vw; 
     display: flex;
     flex-direction: column;
     padding: 1rem;
@@ -116,6 +115,7 @@
 
 .products-container {
     display: grid;
+    flex: 1;
     grid-template-columns: repeat(3, minmax(0, 1fr)); /* Always 3 columns */
     grid-template-rows: repeat(2, 1fr);  /* Always 2 rows */
     gap: 1rem;
@@ -126,7 +126,7 @@
     background-color: var(--cream);
     box-shadow: 1px 1px 5px var(--brown2);
     border-radius: 0.5rem;
-    padding: 1rem 2rem;
+    padding: clamp(1rem, 2vw, 1.5rem);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -142,9 +142,9 @@
 
 .image-container {
     width: 100%;
-    aspect-ratio: 4 / 3; /* Ensures a consistent shape */
-    overflow: hidden; /* Prevents unexpected stretching */
-    background-color: #f0f0f0; /* Placeholder */
+    aspect-ratio: 16 / 9; /* Ensures a consistent shape */
+    overflow: hidden; 
+    background-color: #f0f0f0; 
 }
 
 .card-image {
@@ -155,11 +155,11 @@
 .product-name-container {
     padding: 0.5rem;
     font-weight: bolder;
-    font-size: clamp(1rem, 2vw, 1.5rem); /* Dynamically scales between min and max */
-    white-space: nowrap; /* Prevents text from wrapping */
-    overflow: hidden; /* Hides overflowing text */
+    font-size: clamp(1rem, 2vw, 1.5rem); 
+    white-space: nowrap; 
+    overflow: hidden; 
     text-overflow: ellipsis; /* Adds "..." when text is too long */
-    max-width: 100%; /* Ensures it stays inside its container */
+    max-width: 100%; 
 }
 
 

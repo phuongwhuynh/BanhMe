@@ -24,8 +24,5 @@ class User {
             return ["success" => false, "message" => $e->getMessage()];
         }
     }
-    static public function logout(){
-
-    }
 }
 ?>

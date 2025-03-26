@@ -62,7 +62,12 @@
         function logout() {
             console.log(1234);
             let xhr=new XMLHttpRequest();
-            xhr.open("POST", "index.php?ajax=1&controller=user&action=logOut",true);
+            xhr.open("POST", "index.php",true);
+            let formData = new FormData(); 
+            formData.append("ajax", "1");
+            formData.append("controller", "user");
+            formData.append("action", "logOut");
+
             xhr.timeout = 5000; // 5 seconds
             xhr.ontimeout=function() {
                 alert("Request timed out. Please try again.");
@@ -83,7 +88,7 @@
                     }
                 }
             }
-            xhr.send();     
+            xhr.send(formData);     
         }
 
         window.onclick = function(event) {
@@ -102,7 +107,7 @@
     <nav>
       <ul>
       <li><a href="index.php?page=home" class="navbar-button <?php echo ($page == 'home') ? 'active' : ''; ?>">Trang chủ</a></li>
-      <li><a href="index.php?page=order" class="navbar-button <?php echo ($page == 'order') ? 'active' : ''; ?>">Đặt hàng </a></li>
+      <li><a href="index.php?page=order" class="navbar-button <?php echo ($page == 'order') ? 'active' : ''; ?>">Thực đơn </a></li>
       <?php if ($_SESSION['user_role']==="user"): ?>
         <li><a href="index.php?page=history" class="navbar-button <?php echo ($page == 'history') ? 'active' : ''; ?>">Lịch sử </a></li>
       <?php endif; ?>
