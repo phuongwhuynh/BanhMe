@@ -22,7 +22,7 @@ class PageController {
         }
         else {
             $content =  "../app/views/$page.php";
-            require_once "../app/views/layout_guest.php";
+            require_once "../app/views/layout.php";
         }
     }
 
@@ -33,7 +33,7 @@ class PageController {
         }
         else {
             $content =  "../app/views/$page.php";
-            require_once "../app/views/layout_user.php";
+            require_once "../app/views/layout.php";
         }
     }
     private static function loadAdminView($page){

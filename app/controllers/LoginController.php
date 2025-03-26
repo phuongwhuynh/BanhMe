@@ -9,5 +9,13 @@ class LoginController {
         echo json_encode($response);
 
     }
+    public static function logout() {
+        session_unset(); 
+        session_destroy(); 
+        echo json_encode(["success" => true]); 
+    }
+    public static function signUp() {
+
+    }
 }
 ?>

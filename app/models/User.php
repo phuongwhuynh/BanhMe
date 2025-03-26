@@ -14,6 +14,7 @@ class User {
             if ($user && $password==$user['password_hash'] /*password_verify($password, $user['password_hash'])*/) {
                 $_SESSION['user_role'] = $user['role']; 
                 $_SESSION['user_id']=$user['user_id'];
+                $_SESSION['username']=$username;
                 return ["success" => true];
             } else {
                 return ["success" => false, "message" => "Incorrect username or password!"];
@@ -22,6 +23,9 @@ class User {
         catch (PDOException $e){
             return ["success" => false, "message" => $e->getMessage()];
         }
+    }
+    static public function logout(){
+
     }
 }
 ?>

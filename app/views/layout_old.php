@@ -24,15 +24,30 @@
       <ul>
       <li><a href="index.php?page=home" class="navbar-button <?php echo ($page == 'home') ? 'active' : ''; ?>">Trang chủ</a></li>
       <li><a href="index.php?page=order" class="navbar-button <?php echo ($page == 'order') ? 'active' : ''; ?>">Đặt hàng </a></li>
+      <?php if ($_SESSION['user_role']==="user"): ?>
+        <li><a href="index.php?page=history" class="navbar-button <?php echo ($page == 'history') ? 'active' : ''; ?>">Lịch sử </a></li>
+      <?php endif; ?>
       <li><a href="index.php?page=contact" class="navbar-button <?php echo ($page == 'contact') ? 'active' : ''; ?>">Liên lạc</a></li>
-      <!--<li><a href="index.php?page=history" class="navbar-button <?php echo ($page == 'history') ? 'active' : ''; ?>">Lịch sử </a></li> -->
+
       </ul>
     </nav>
     <div class="right-header"> 
-        <!-- <a href="index.php?page=home">
-          <img class="cart-image" src="public/images/cart.png">
-        </a> -->
+        <?php if ($_SESSION['user_role']==="user"): ?>
+          <a href="index.php?page=home">
+            <img class="cart-image" src="public/images/cart.png">
+          </a>
+          <div class="profile-container">
+            <div class="profile-icon" onclick="toggleDropdown()">
+              <?= strtoupper($_SESSION['username'][0]); ?> First letter as icon
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu">
+              <p>Xin chào, <?= $_SESSION['username']; ?>!</p>
+              <a href="#" onclick="logout()">Đăng xuất</a>
+            </div>
+          </div>
+      <?php else: ?>
         <a href="index.php?page=login" class="login-button">Đăng nhập</a>
+      <?php endif; ?>
     </div>
   </header>
   <div class="content-container">
