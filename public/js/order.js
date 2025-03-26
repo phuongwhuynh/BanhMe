@@ -78,7 +78,7 @@ function fetchProducts(page = 1) {
             }
 
             // Handle "Next" button
-            nextPage.disabled = (page === totalPages);
+            nextPage.disabled = (page >= totalPages);
             nextPage.onclick = () => fetchProducts(page + 1);
 
             currentPage = page;
