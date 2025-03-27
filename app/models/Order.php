@@ -61,19 +61,19 @@ class Order {
     }
     
     public static function countAll($categories = []) {
+        if (empty($categories)){
+            return 0;
+        }
         $db = Database::connect();
         $query = "SELECT COUNT(*) as total FROM menu";
     
-        if (!empty($categories)) {
-            $placeholders = implode(",", array_fill(0, count($categories), "?"));
-            $query .= " WHERE cate IN ($placeholders)";
-        }
+        $placeholders = implode(",", array_fill(0, count($categories), "?"));
+        $query .= " WHERE cate IN ($placeholders)";
+        
     
         $stmt = $db->prepare($query);
-    
-        if (!empty($categories)) {
-            $stmt->bind_param(str_repeat("s", count($categories)), ...$categories);
-        }
+        $stmt->bind_param(str_repeat("s", count($categories)), ...$categories);
+        
     
         $stmt->execute();
         $result = $stmt->get_result()->fetch_assoc();
