@@ -7,5 +7,11 @@ class CartController {
         header('Content-Type: application/json');
         echo json_encode($items);
     }
+    public static function updateQuantity(){
+        
+    }
+    public static function deleteItem(){
+
+    }
 }
 ?>
