@@ -96,3 +96,7 @@ create table in_cart (
     foreign key(user_id) references accounts(user_id),
     foreign key(item_id) references menu(item_id)
 );
+
+SELECT c.quantity, m.name, m.price, m.image_path
+FROM in_cart c JOIN menu m ON c.item_id=m.item_id
+WHERE c.user_id=1;
