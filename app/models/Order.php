@@ -13,6 +13,7 @@ class Order {
         }
         return $items;
     }
+
     public static function getAll(){
         $db=Database::connect();
         $result=$db->query("SELECT * FROM menu");
@@ -22,6 +23,7 @@ class Order {
         }
         return $items;
     }
+    
     public static function getPaginated($page, $limit, $sort, $categories) {
         $db = Database::connect();
         $offset = ($page - 1) * $limit;
@@ -87,7 +89,7 @@ class Order {
             $old_quantity=null;
             // check if item already exists in the user's cart
             $stmt = $db->prepare("SELECT quantity FROM in_cart WHERE user_id = ? AND item_id = ?");
-            $stmt->bind_param("ii", $user_id, $item_id); // Bind parameters (string, integer)
+            $stmt->bind_param("ii", $user_id, $item_id); 
             $stmt->execute();
             $stmt->bind_result($old_quantity);
             $stmt->fetch();

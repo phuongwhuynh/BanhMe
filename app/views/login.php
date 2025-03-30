@@ -1,5 +1,7 @@
 <div class="login-container">
   <h2>Login</h2>
+  <div id="login-error" class="hidden"></div>
+
   <form onsubmit="login(event)">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" required>
@@ -13,6 +15,12 @@
 </div>
 
 <script>
+function showLoginError(message) {
+    let errorBox = document.getElementById("login-error");
+    errorBox.textContent = message;
+    errorBox.style.display = "block";
+}
+
 function login(event){
   event.preventDefault();
   const formData=new FormData(event.target);
@@ -23,23 +31,21 @@ function login(event){
   formData.append("action","loginAttempt")
   xhr.timeout = 5000; // 5 seconds
     xhr.ontimeout=function() {
-        alert("Request timed out. Please try again.");
+      alert("Request timed out. Please try again.", true);
     }
     xhr.onreadystatechange = function () {
       if (xhr.readyState==4){
         if (xhr.status==200){
           let response=JSON.parse(xhr.responseText);
           if (response.success) {
-            //todo: return to page home
-            console.log("successful login")
             window.location.href = "index.php?page=home";
           }
           else {
-            alert(response.message);
+            showLoginError(response.message);
           }
         }
         else {
-          alert("Request failed with status: " + xhr.status)
+          alert("Request failed with status: " + xhr.status, true)
         }
       }
   }
@@ -48,7 +54,24 @@ function login(event){
 </script>
 
 <style>
-  .login-container {
-    padding: 1rem;
-  }
+
+.login-container {
+  padding: 1rem;
+}
+#login-error {
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #dc3545; 
+  color: var(--cream);
+  border-radius: 5px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  display: none;
+}
+
+.hidden {
+    display: none;
+}
+
 </style>

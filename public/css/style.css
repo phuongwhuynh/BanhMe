@@ -1,15 +1,15 @@
 body {
     display: flex;
     flex-direction: column; 
-    height: 100vh;
+    min-height: 100vh;
     width: 100vw; 
     font-family: 'Trebuchet MS', sans-serif;
     background-color: var(--brown1);   
     color: var(--white);
     margin: 0;
     padding: 0;
-    overflow-y: hidden; 
     overflow-x: hidden;
+    overflow-y: auto;
 }
 
 header {
@@ -78,6 +78,7 @@ nav ul li a {
     display: flex;
     justify-content: right;
     align-items: center;
+    gap:1rem;
 }
 
 .content-container {
@@ -113,8 +114,69 @@ nav ul li a {
 .login-button:active {
     background-color: var(--brown2);
 }
+.profile-container {
+    position: relative;
+    display: inline-block;
+}
 
+.profile-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+}
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 10px;
+    width: 150px;
+}
+.dropdown-menu a {
+    display: block;
+    padding: 8px;
+    text-decoration: none;
+    color: black;
+}
+.dropdown-menu a:hover {
+    background-color: #f1f1f1;
+}
 
+#notification-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px 30px;
+    background: #28a745;
+    color: var(--cream);
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    display: none;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 1000;
+}
+
+#notification-popup.error {
+    background: #dc3545; /* Red color for errors */
+}
+
+.hidden {
+    display: none;
+}
 
 
 

@@ -13,90 +13,9 @@
   ?>
   <link rel="stylesheet" href="<?php echo $cssWebPath; ?>">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="public/js/main.js" defer></script>
   <script src="<?php echo $jsPath?>" defer></script>
 
-  <style>
-        .profile-container {
-            position: relative;
-            display: inline-block;
-        }
-        .profile-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #007bff;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 50px;
-            right: 0;
-            background: white;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            padding: 10px;
-            width: 150px;
-        }
-        .dropdown-menu a {
-            display: block;
-            padding: 8px;
-            text-decoration: none;
-            color: black;
-        }
-        .dropdown-menu a:hover {
-            background-color: #f1f1f1;
-        }
-    </style>
-    <script>
-        function toggleDropdown() {
-            let menu = document.getElementById("dropdown-menu");
-            menu.style.display = (menu.style.display === "block") ? "none" : "block";
-        }
-        
-        function logout() {
-            console.log(1234);
-            let xhr=new XMLHttpRequest();
-            xhr.open("POST", "index.php",true);
-            let formData = new FormData(); 
-            formData.append("ajax", "1");
-            formData.append("controller", "user");
-            formData.append("action", "logOut");
-
-            xhr.timeout = 5000; // 5 seconds
-            xhr.ontimeout=function() {
-                alert("Request timed out. Please try again.");
-            }
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState==4){
-                    if (xhr.status==200){
-                        let response=JSON.parse(xhr.responseText);
-                        if (response.success) {
-                            window.location.href = "index.php?page=home";
-                        }
-                        else {
-                            alert(response.message);
-                        }
-                    }
-                    else {
-                        alert("Request failed with status: " + xhr.status)
-                    }
-                }
-            }
-            xhr.send(formData);     
-        }
-
-        window.onclick = function(event) {
-            if (!event.target.closest('.profile-container')) {
-                document.getElementById("dropdown-menu").style.display = "none";
-            }
-        };
-    </script>
 
 </head>
 <body>
@@ -111,13 +30,13 @@
       <?php if ($_SESSION['user_role']==="user"): ?>
         <li><a href="index.php?page=history" class="navbar-button <?php echo ($page == 'history') ? 'active' : ''; ?>">Lịch sử </a></li>
       <?php endif; ?>
-      <li><a href="index.php?page=contact" class="navbar-button <?php echo ($page == 'contact') ? 'active' : ''; ?>">Liên lạc</a></li>
+      <li><a href="index.php?page=contact" class="navbar-button <?php echo ($page == 'contact') ? 'active' : ''; ?>">Liên hệ</a></li>
 
       </ul>
     </nav>
     <div class="right-header"> 
         <?php if ($_SESSION['user_role']==="user"): ?>
-          <a href="index.php?page=home">
+          <a href="index.php?page=cart">
             <img class="cart-image" src="public/images/cart.png">
           </a>
           <div class="profile-container">
@@ -136,6 +55,11 @@
   </header>
   <div class="content-container">
   <?php include($content); ?>
+  </div>
+
+  
+  <div id="notification-popup" class="hidden">
+    <span id="notification-message"></span>
   </div>
 
 </body>

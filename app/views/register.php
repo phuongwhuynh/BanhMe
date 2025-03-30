@@ -1,21 +1,26 @@
 <div class="register-container">
   <h2>Register</h2>
+  <div id="register-error" class="hidden"></div>
+
   <form onsubmit="register(event)">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" required>
     
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" required>
-    
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
-    
+        
     <button type="submit">Register</button>
   </form>
   <p>Already have an account? <a href="index.php?page=login">Sign in here!</a></p>
 </div>
 
 <script>
+function showRegisterError(message) {
+  let errorBox = document.getElementById("register-error");
+  errorBox.textContent = message;
+  errorBox.style.display = "block";
+}
+
 function register(event){
   event.preventDefault();
   const formData = new FormData(event.target);
@@ -35,8 +40,10 @@ function register(event){
       if (xhr.status == 200) {
         let response = JSON.parse(xhr.responseText);
         if (response.success) {
-          console.log("Successful registration");
-          window.location.href = "index.php?page=home";
+          showNotification("Successful registration. Please Login Again. Redirecting...");
+          setTimeout(() => {
+              window.location.href = "index.php?page=login";
+          }, 2000);
         } else {
           alert(response.message);
         }
@@ -53,4 +60,20 @@ function register(event){
   .register-container {
     padding: 1rem;
   }
+  #register-error {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #dc3545; 
+    color: var(--cream);
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    display: none;
+  }
+
+  .hidden {
+      display: none;
+  }
+
 </style>

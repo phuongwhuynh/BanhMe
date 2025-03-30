@@ -1,5 +1,5 @@
 let currentPage = 1;
-const limit = 6;
+const limit = 12;
 const maxVisiblePages = 5; 
 let debounceTimer;
 
@@ -138,6 +138,8 @@ function decreaseQuantity() {
 
 };
 
+
+
 function addCart(event) {
     event.preventDefault(); //prevents form from refreshing the page
 
@@ -152,22 +154,26 @@ function addCart(event) {
 
     xhr.timeout = 5000; // 5 seconds
     xhr.ontimeout=function() {
-        alert("Request timed out. Please try again.");
+        showNotification("Request timed out. Please try again.", true);
     }
     xhr.onreadystatechange = function () {
         if (xhr.readyState==4){
             if (xhr.status==200){
                 let response=JSON.parse(xhr.responseText);
                 if (response.success) {
-                    alert("Item added to cart successfully!");
+                    showNotification("Item added to cart successfully!");
+
                 }
                 else {
                     if (response.message === "Unauthorized") {
-                        alert("You must be logged in as a user to add items to the cart.");
-                        window.location.href = "index.php?page=login";
+                        showNotification("You must be logged in as a user to add items to the cart. Redirecting...", true);
+                        setTimeout(() => {
+                            window.location.href = "index.php?page=login";
+                        }, 2000);
                     } 
                     else {
-                        alert(response.message);
+                        alert(response.message, true);
+
                     }
                 }
             }

@@ -27,7 +27,7 @@ class PageController {
     }
 
     private static function loadUserView($page){
-        $allowedPages = ["home", "order","history","contact"];
+        $allowedPages = ["home", "order","history","contact","cart"];
         if (!in_array($page, $allowedPages)) {
             require_once "../app/views/404.php";
         }

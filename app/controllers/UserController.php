@@ -14,7 +14,12 @@ class UserController {
         session_destroy(); 
         echo json_encode(["success" => true]); 
     }
-    public static function signUp() {
+    public static function registerAttempt() {
+        $username=$_POST["username"];
+        $password=$_POST["password"];
+        $response=User::signUp($username,$password);
+        header('Content-Type: application/json');
+        echo json_encode($response);
 
     }
 }

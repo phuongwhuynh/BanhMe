@@ -1,6 +1,6 @@
 <main>
 <div class="main-container">
-    <span class="brand-name">Bánh Me!</span>
+    <h1 class="brand-name">Bánh Me!</h1>
     <span class="slogan">Hương vị đậm đà, trọn vẹn niềm vui!</span>
 </div>
 </main>

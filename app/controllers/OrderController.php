@@ -8,11 +8,11 @@ class OrderController {
     public static function countOrders($categories) {
         return Order::countAll($categories);
     }
-    public static function getPaginated($page =1, $limit=6, $sort, $categories) {
+    public static function getPaginated($page =1, $limit=12, $sort, $categories) {
         return Order:: getPaginated($page,$limit,$sort, $categories);
     }
     public static function handlePagination() {
-        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 6;
+        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 12;
         $page = isset($_GET['pageNum']) ? (int)$_GET['pageNum'] : 1;
         $sort = isset($_GET['sort']) ? $_GET['sort'] : "name_asc";
         $categories=isset($_GET['categories']) ?explode(",", $_GET["categories"]) : [];

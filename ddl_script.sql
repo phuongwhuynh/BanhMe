@@ -11,8 +11,7 @@ create table accounts (
     status ENUM('active','deleted') not null
 );
 
-insert into accounts (username,password_hash,role,status) values
-('account','password','user','active');
+
 
 
 drop table if exists menu;
@@ -90,8 +89,10 @@ DELIMITER ;
 
 drop table if exists in_cart;
 create table in_cart (
-	user_id int unsigned primary key,
+	user_id int unsigned,
     item_id int unsigned,
     quantity int,
-    foreign key(user_id) references accounts(user_id)
+    primary key(user_id,item_id),
+    foreign key(user_id) references accounts(user_id),
+    foreign key(item_id) references menu(item_id)
 );

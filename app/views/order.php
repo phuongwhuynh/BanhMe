@@ -1,7 +1,7 @@
 <div class="order-container">
   <div class="left-container">
     <div class="title-container">
-      <span class="title">Thực đơn</span>
+      <h1 class="title">Thực đơn</h1>
     </div>
     <div class="cate-container">
       <div class="filter-title-container">
