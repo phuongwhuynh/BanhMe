@@ -137,6 +137,22 @@ function handleQuantityChange(event) {
 
 
 
+function debouncePerItem(func, delay) {
+    const timers = {};
+
+    return function (itemId, ...args) {
+        if (timers[itemId]) {
+            clearTimeout(timers[itemId]);
+        }
+        
+        timers[itemId] = setTimeout(() => {
+            func(itemId, ...args);
+            delete timers[itemId]; // Clean up after execution
+        }, delay);
+    };
+}
+
+
 function updateDatabase(itemId, quantity) {
     const formData = new FormData();
     formData.append("item_id", itemId);
@@ -147,15 +163,22 @@ function updateDatabase(itemId, quantity) {
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log("Quantity updated successfully.");
+            console.log(`Quantity updated: Item ${itemId} -> ${quantity}`);
         }
     };
 
     xhr.send(formData);
 }
 
+const debouncedUpdateDatabase = debouncePerItem(updateDatabase, 500);
 
 function deleteItem(itemId, itemCard) {
+    // Cancel any pending update for the item
+    if (debouncedUpdateDatabase[itemId]) {
+        clearTimeout(debouncedUpdateDatabase[itemId]);
+        delete debouncedUpdateDatabase[itemId];
+    }
+
     const formData = new FormData();
     formData.append("item_id", itemId);
     formData.append("quantity", 0);
@@ -165,7 +188,7 @@ function deleteItem(itemId, itemCard) {
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log("Item deleted.");
+            console.log(`Item deleted: ${itemId}`);
             itemCard.remove();
         }
     };
@@ -173,16 +196,6 @@ function deleteItem(itemId, itemCard) {
     xhr.send(formData);
 }
 
-
-function debounce(func, delay) {
-    let timer;
-    return function (...args) {
-        clearTimeout(timer);
-        timer = setTimeout(() => func.apply(this, args), delay);
-    };
-}
-
-const debouncedUpdateDatabase = debounce(updateDatabase, 500);
 
 
 function showDeleteModal(itemId, itemCard) {
