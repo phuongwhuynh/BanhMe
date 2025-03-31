@@ -17,71 +17,76 @@ function fetchProducts(page = 1) {
     xhr.open("GET", `index.php?ajax=1&controller=order&action=handlePagination&pageNum=${page}&limit=${limit}&sort=${sort}${categoryQuery}`, true);
 
     xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            const data = JSON.parse(xhr.responseText);
-            const productList = document.getElementById("product-list");
-            const pageNumbers = document.getElementById("pageNumbers");
-            const prevPage = document.getElementById("prevPage");
-            const nextPage = document.getElementById("nextPage");
-            // Clear previous content
-            productList.innerHTML = "";
-            pageNumbers.innerHTML = "";
+        if (xhr.readyState === 4){
+            if (xhr.status === 200) {
+                const data = JSON.parse(xhr.responseText);
+                const productList = document.getElementById("product-list");
+                const pageNumbers = document.getElementById("pageNumbers");
+                const prevPage = document.getElementById("prevPage");
+                const nextPage = document.getElementById("nextPage");
+                // Clear previous content
+                productList.innerHTML = "";
+                pageNumbers.innerHTML = "";
 
-            // Add products
-            data.products.forEach(product => {
-                productList.innerHTML += 
-                    `<div class="product-card"
-                        onClick="openModal('${product.item_id}','${product.image_path}','${product.name}','${product.price}','${product.description}')">
-                        
-                        <div class="image-container">
-                            <img class="card-image" src="public/${product.image_path}" alt="${product.name}">
-                        </div>
-            
-                        <div class="product-name-container">
-                            ${product.name} 
-                        </div>
-                        <div class="product-price-container">
-                            ${Math.round(product.price).toLocaleString('vi-VN')} VND
-                        </div>
-                    </div>`;
-            });
+                // Add products
+                data.products.forEach(product => {
+                    productList.innerHTML += 
+                        `<div class="product-card"
+                            onClick="openModal('${product.item_id}','${product.image_path}','${product.name}','${product.price}','${product.description}')">
+                            
+                            <div class="image-container">
+                                <img class="card-image" src="public/${product.image_path}" alt="${product.name}">
+                            </div>
+                
+                            <div class="product-name-container">
+                                ${product.name} 
+                            </div>
+                            <div class="product-price-container">
+                                ${Math.round(product.price).toLocaleString('vi-VN')} VND
+                            </div>
+                        </div>`;
+                });
 
-            // const totalPages = data.totalProducts/limit;
-            const totalPages=data.totalPages;
+                // const totalPages = data.totalProducts/limit;
+                const totalPages=data.totalPages;
 
-            // Handle "Previous" button
-            prevPage.disabled = (page === 1);
-            prevPage.onclick = () => fetchProducts(page - 1);
+                // Handle "Previous" button
+                prevPage.disabled = (page === 1);
+                prevPage.onclick = () => fetchProducts(page - 1);
 
-            // Pagination range
-            let startPage = Math.max(1, page - Math.floor(maxVisiblePages / 2));
-            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-            if (endPage - startPage + 1 < maxVisiblePages) {
-                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+                // Pagination range
+                let startPage = Math.max(1, page - Math.floor(maxVisiblePages / 2));
+                let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+                if (endPage - startPage + 1 < maxVisiblePages) {
+                    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+                }
+
+                // First page
+                if (startPage > 1) {
+                    pageNumbers.appendChild(createPageButton(1));
+                    if (startPage > 2) pageNumbers.appendChild(createEllipsis());
+                }
+
+                // Page buttons
+                for (let i = startPage; i <= endPage; i++) {
+                    pageNumbers.appendChild(createPageButton(i, i === page));
+                }
+
+                // Last page
+                if (endPage < totalPages) {
+                    if (endPage < totalPages - 1) pageNumbers.appendChild(createEllipsis());
+                    pageNumbers.appendChild(createPageButton(totalPages));
+                }
+
+                // Handle "Next" button
+                nextPage.disabled = (page >= totalPages);
+                nextPage.onclick = () => fetchProducts(page + 1);
+
+                currentPage = page;
             }
-
-            // First page
-            if (startPage > 1) {
-                pageNumbers.appendChild(createPageButton(1));
-                if (startPage > 2) pageNumbers.appendChild(createEllipsis());
+            else {
+                alert("Request failed with status: " + xhr.status, true)
             }
-
-            // Page buttons
-            for (let i = startPage; i <= endPage; i++) {
-                pageNumbers.appendChild(createPageButton(i, i === page));
-            }
-
-            // Last page
-            if (endPage < totalPages) {
-                if (endPage < totalPages - 1) pageNumbers.appendChild(createEllipsis());
-                pageNumbers.appendChild(createPageButton(totalPages));
-            }
-
-            // Handle "Next" button
-            nextPage.disabled = (page >= totalPages);
-            nextPage.onclick = () => fetchProducts(page + 1);
-
-            currentPage = page;
         }
     };
     xhr.send();

@@ -1,39 +1,31 @@
 <h1>Cart</h1>
-<div id="item-list">
-    <!-- <div class="item-card">
-        <div class="image-container">
-            <img class="card-image" src="public/images/banh_mi_xiu_mai.jpg" alt="Bánh Mì Xíu Mại">
-        </div>
-        <div class="item-name-container">
-            Bánh Mì Xíu Mại
-        </div>
-        <div class="item-price-container">
-            30000 VND
-        </div>
-        <div class="quantity-container">
-            <button class="quantity-btn decrease-btn" type="button">&#8722;</button>
-            <input class="quantity" type="number" name="quantity" value="1" min="1">
-            <button class="quantity-btn increase-btn" type="button">&#43;</button>
-        </div>
-
+<div class="cart-container">
+    <div class="left-container">
+        <div class="item-list" id="item-list"></div>
     </div>
-    <div class="item-card">
-        <div class="image-container">
-            <img class="card-image" src="public/images/banh_mi_cha_ca.jpg" alt="Bánh Mì Chả Cá">
-        </div>
-        <div class="item-name-container">
-            Bánh Mì Chả Cá
-        </div>
-        <div class="item-price-container">
-            30000 VND
-        </div>
-        <div class="quantity-container">
-            <button class="quantity-btn decrease-btn" type="button">&#8722;</button>
-            <input class="quantity" type="number" name="quantity" value="1" min="1">
-            <button class="quantity-btn increase-btn" type="button">&#43;</button>
+    <div class="right-container">
+        <div class="total-money-contaier" id="total-money">100000VND</div>
+
+        <div class="shipping-method-container">
+            <label>
+                <input type="radio" name="shipping" value="ship" id="ship"> Giao hàng
+            </label>
+            <label>
+                <input type="radio" name="shipping" value="take-out" id="take-out"> Tự đến lấy
+            </label>
         </div>
 
-    </div> -->
+        <div class="payment-method-container" id="payment-method-container" style="display: none;">
+            <form>
+                <label>
+                    <input type="radio" name="payment" value="to-shipper"> Thanh toán tại địa điểm giao hàng
+                </label>
+                <label>
+                    <input type="radio" name="payment" value="transfer"> Thanh toán bằng chuyển khoản
+                </label>
+            </form>
+        </div>
+    </div>
 </div>
 <div id="deleteModal" class="modal">
     <div class="modal-content">
@@ -102,12 +94,25 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const itemList = document.getElementById("item-list");
-
     itemList.addEventListener("click", handleQuantityChange);
 
+    const shippingRadioButtons = document.querySelectorAll('input[name="shipping"]');
+    const paymentMethodContainer = document.getElementById('payment-method-container');
+    shippingRadioButtons.forEach(radio => {
+        radio.addEventListener('change', togglePaymentMethod);
+    });
+    
     fetchItems(); // fetch items when the page loads
 });
 
+function togglePaymentMethod() {
+    const paymentMethodContainer = document.getElementById('payment-method-container');
+    if (document.getElementById('ship').checked) {
+        paymentMethodContainer.style.display = 'block';
+    } else {
+        paymentMethodContainer.style.display = 'none';
+    }
+}
 
 function handleQuantityChange(event) {
     const target = event.target;
@@ -118,7 +123,6 @@ function handleQuantityChange(event) {
     const quantityInput = itemCard.querySelector(".quantity");
     const decreaseBtn = itemCard.querySelector(".decrease-btn");
     const itemId = itemCard.dataset.itemId;
-
     if (target.classList.contains("increase-btn")) {
         quantityInput.value = parseInt(quantityInput.value) + 1;
         debouncedUpdateDatabase(itemId, quantityInput.value);
@@ -157,13 +161,26 @@ function updateDatabase(itemId, quantity) {
     const formData = new FormData();
     formData.append("item_id", itemId);
     formData.append("quantity", quantity);
-
+    formData.append("ajax",1);
+    formData.append("controller","cart");
+    formData.append("action","updateQuantity")
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "index.php?ajax=1&controller=cart&action=updateQuantity", true);
+    xhr.open("POST", "index.php", true);
 
     xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log(`Quantity updated: Item ${itemId} -> ${quantity}`);
+        if (xhr.readyState === 4){
+            if (xhr.status === 200) {
+                const response=JSON.parse(xhr.responseText);
+                if (!response.success){
+                    alert(response.message);
+                }
+                else {
+                    console.log("updated");
+                }
+            }
+            else {
+                alert("Request failed with status: " + xhr.status, true)
+            }        
         }
     };
 
@@ -174,6 +191,7 @@ const debouncedUpdateDatabase = debouncePerItem(updateDatabase, 500);
 
 function deleteItem(itemId, itemCard) {
     // Cancel any pending update for the item
+
     if (debouncedUpdateDatabase[itemId]) {
         clearTimeout(debouncedUpdateDatabase[itemId]);
         delete debouncedUpdateDatabase[itemId];
@@ -182,14 +200,28 @@ function deleteItem(itemId, itemCard) {
     const formData = new FormData();
     formData.append("item_id", itemId);
     formData.append("quantity", 0);
+    formData.append("ajax",1);
+    formData.append("controller","cart");
+    formData.append("action","updateQuantity")
 
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "index.php?ajax=1&controller=cart&action=updateQuantity", true);
+    xhr.open("POST", "index.php", true);
 
     xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log(`Item deleted: ${itemId}`);
-            itemCard.remove();
+        if (xhr.readyState === 4){
+            if (xhr.status === 200) {
+                const response=JSON.parse(xhr.responseText);
+                if (response.success){
+                    console.log("deleted")
+                    itemCard.remove();
+                }
+                else {
+                    alert(response.message);
+                }
+            }
+            else {
+                alert("Request failed with status: " + xhr.status, true)
+            }
         }
     };
 
@@ -216,7 +248,7 @@ function showDeleteModal(itemId, itemCard) {
 }
 
 
-// Fetches cart items from the server and renders them in the UI.
+// fetches cart items
 function fetchItems() {
     const xhr = new XMLHttpRequest();
     xhr.open("GET", "index.php?ajax=1&controller=cart&action=getAll", true);

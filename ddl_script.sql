@@ -93,8 +93,8 @@ create table in_cart (
     item_id int unsigned,
     quantity int,
     primary key(user_id,item_id),
-    foreign key(user_id) references accounts(user_id),
-    foreign key(item_id) references menu(item_id)
+    foreign key(user_id) references accounts(user_id) on delete cascade,
+    foreign key(item_id) references menu(item_id) on delete cascade
 );
 
 SELECT c.quantity, m.name, m.price, m.image_path

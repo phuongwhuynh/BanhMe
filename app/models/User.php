@@ -25,7 +25,6 @@ class User {
         }
     }
     static public function signUp($username, $password) {
-        //todo: insert into database username and password if username is unique...etc.
         try {
             $db = Database::connect();
     
@@ -48,7 +47,9 @@ class User {
     
             return ["success" => true, "message" => "Account created successfully!"];
         } catch (mysqli_sql_exception $e) {
-            return ["success" => false, "message" => $e->getMessage()];
+            error_log("User::signUp error: " . $e->getMessage());
+            return ["success" => false, "message" => "An error occurred. Please try again later."];
+
         }
     
     }

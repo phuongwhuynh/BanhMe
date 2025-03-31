@@ -15,6 +15,7 @@
 </div>
 
 <script>
+//to do: make the user type password twice
 function showRegisterError(message) {
   let errorBox = document.getElementById("register-error");
   errorBox.textContent = message;
