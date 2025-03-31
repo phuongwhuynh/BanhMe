@@ -53,11 +53,13 @@
       <?php endif; ?>
     </div>
   </header>
-  <div class="content-container">
+  <main>
   <?php include($content); ?>
+  </main>
   </div>
-
-  
+  <footer>
+    &copy; 2025 Bánh Me! All Rights Reserved.
+  </footer>
   <div id="notification-popup" class="hidden">
     <span id="notification-message"></span>
   </div>

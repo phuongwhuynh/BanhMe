@@ -22,16 +22,21 @@
         <option value="price_desc">Giá (Cap-Thấp)</option>
       </select>
     </div>
+    <div class="search-container"> 
+      to-do
+    </div>
   </div>
   <!-- Product List -->
   <div class="right-container">
-    <div id="product-list" class="products-container"></div>
+    <div class="scroll-container">
+      <div id="product-list" class="products-container"></div>
 
-    <!-- Pagination -->
-    <div id="pagination" class="pagination">
-        <button id="prevPage" class="fixed-nav">&#8592;</button>
-        <div id="pageNumbers" class="page-numbers"></div>
-        <button id="nextPage" class="fixed-nav"> &#8594;</button>
+      <!-- Pagination -->
+      <div id="pagination" class="pagination">
+          <button id="prevPage" class="fixed-nav">&#8592;</button>
+          <div id="pageNumbers" class="page-numbers"></div>
+          <button id="nextPage" class="fixed-nav"> &#8594;</button>
+      </div>
     </div>
   </div>
 </div>

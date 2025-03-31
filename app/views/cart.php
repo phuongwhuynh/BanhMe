@@ -158,9 +158,10 @@ function updateDatabase(itemId, quantity) {
 function deleteItem(itemId, itemCard) {
     const formData = new FormData();
     formData.append("item_id", itemId);
+    formData.append("quantity", 0);
 
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "index.php?ajax=1&controller=cart&action=deleteItem", true);
+    xhr.open("POST", "index.php?ajax=1&controller=cart&action=updateQuantity", true);
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {

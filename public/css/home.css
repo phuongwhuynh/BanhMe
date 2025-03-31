@@ -1,25 +1,13 @@
-main {
-    flex: 1;
-    overflow-y: hidden;  
-
-
-}
-.content-container {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3)), 
+body {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), 
     url('../images/banhmi_main.jpg');
     background-size: cover; 
     background-position: center; 
     background-repeat: no-repeat; 
-}
-footer {
-    color: var(--brown1);
-    font-weight: bold;
-    padding-left:12px;
-    margin-top:auto;
+
 }
 .main-container {
-
-
+    flex: 1;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -30,14 +18,51 @@ footer {
     color: var(--cream);
     gap:0.5rem;
     font-weight: bolder;
-
 }
 .brand-name {
     font-weight: bolder;
     font-size: 8rem;
+    margin: 1rem 0;
 }
 .slogan {
     color: var(--cream);
     font-size: 2rem;
     font-weight: bold;
+}
+@media (max-width: 1200px) {
+    .brand-name {
+        font-size: 6rem;
+    }
+    .slogan {
+        font-size: 1.8rem;
+    }
+}
+@media (max-width: 992px) {
+    .brand-name {
+        font-size: 5rem;
+    }
+    .slogan {
+        font-size: 1.6rem;
+    }
+}
+@media (max-width: 768px) {
+
+}
+@media (max-width: 600px) {
+    .brand-name {
+        font-size: 4rem;
+    }
+    .slogan {
+        font-size: 1.4rem;
+    }
+
+}
+@media (max-width: 480px) {
+    .brand-name {
+        font-size: 3.5rem;
+    }
+    .slogan {
+        font-size: 1.3rem;
+    }
+
 }

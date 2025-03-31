@@ -8,10 +8,8 @@ class CartController {
         echo json_encode($items);
     }
     public static function updateQuantity(){
-        
+        // $item_id
     }
-    public static function deleteItem(){
 
-    }
 }
 ?>
