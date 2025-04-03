@@ -28,15 +28,15 @@ class OrderController {
             'totalPages' => $totalPages
         ]);
     }
-    public static function addCart() {
+    public static function addCart($data) {
         if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'user') {
             echo json_encode(["success" => false, "message" => "Unauthorized"]);
             exit();
         }
 
         $username=$_SESSION["user_id"];
-        $quantity=$_POST["quantity"];
-        $item_id=$_POST["item_id"];
+        $quantity=$data["quantity"];
+        $item_id=$data["item_id"];
         $response=Order::addCart($username, $item_id, $quantity);
         header('Content-Type: application/json');
         echo json_encode($response);

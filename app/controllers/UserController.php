@@ -1,9 +1,9 @@
 <?php
 require_once "../app/models/User.php";
 class UserController {
-    public static function loginAttempt() {
-        $username=$_POST["username"];
-        $password=$_POST["password"];
+    public static function loginAttempt($data) {
+        $username=$data["username"];
+        $password=$data["password"];
         $response=User::authenticate($username,$password);
         header('Content-Type: application/json');
         echo json_encode($response);
@@ -14,9 +14,9 @@ class UserController {
         session_destroy(); 
         echo json_encode(["success" => true]); 
     }
-    public static function registerAttempt() {
-        $username=$_POST["username"];
-        $password=$_POST["password"];
+    public static function registerAttempt($data) {
+        $username=$data["username"];
+        $password=$data["password"];
         $response=User::signUp($username,$password);
         header('Content-Type: application/json');
         echo json_encode($response);

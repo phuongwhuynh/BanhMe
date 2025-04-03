@@ -4,27 +4,36 @@
         <div class="item-list" id="item-list"></div>
     </div>
     <div class="right-container">
-        <div class="total-money-contaier" id="total-money">100000VND</div>
+        <div class="total-money-contaier" id="total-money">0VND</div>
 
         <div class="shipping-method-container">
             <label>
                 <input type="radio" name="shipping" value="ship" id="ship"> Giao hàng
             </label>
             <label>
-                <input type="radio" name="shipping" value="take-out" id="take-out"> Tự đến lấy
+                <input type="radio" name="shipping" value="takeout" id="takeout"> Tự đến lấy
             </label>
         </div>
 
-        <div class="payment-method-container" id="payment-method-container" style="display: none;">
+        <div class="payment-method-container" id="paymentMethodContainer" style="display: none;">
             <form>
                 <label>
-                    <input type="radio" name="payment" value="to-shipper"> Thanh toán tại địa điểm giao hàng
+                    <input type="radio" name="payment" value="inplace"> Thanh toán tại địa điểm giao hàng
                 </label>
                 <label>
                     <input type="radio" name="payment" value="transfer"> Thanh toán bằng chuyển khoản
                 </label>
             </form>
         </div>
+        <div class="shipping-info-container" id="shippingInfoContainer" style="display: none;">
+            <form>
+                <input type="text" id="customer_name" name="customer_name" placeholder="Tên">
+                <input type="text" id="customer_phone" name="customer_phone" placeholder="Số điện thoại">
+                <input type="text" id="customer_address" name="customer_address" placeholder="Địa chỉ" style="display: none;">
+            </form>
+        </div>
+        <button class="submit-button" id="submitButton" style="display: none;">Thanh toán</button>
+
     </div>
 </div>
 <div id="deleteModal" class="modal">
@@ -34,7 +43,6 @@
         <button id="cancelDelete" class="modal-btn">Không</button>
     </div>
 </div>
-
 <style>
 .item-list {
     display: flex;
@@ -101,17 +109,25 @@ document.addEventListener("DOMContentLoaded", function () {
     shippingRadioButtons.forEach(radio => {
         radio.addEventListener('change', togglePaymentMethod);
     });
-    
+    const submitButton=document.getElementById('submitButton');
+    submitButton.addEventListener('click',paymentSubmit);
     fetchItems(); // fetch items when the page loads
 });
 
 function togglePaymentMethod() {
-    const paymentMethodContainer = document.getElementById('payment-method-container');
+    const paymentMethodContainer = document.getElementById('paymentMethodContainer');
+    const shippingInfoContainer=document.getElementById('shippingInfoContainer');
+    const addressInput=document.getElementById('customer_address');
+    const submitButton=document.getElementById('submitButton');
     if (document.getElementById('ship').checked) {
         paymentMethodContainer.style.display = 'block';
+        addressInput.style.display='block';
     } else {
         paymentMethodContainer.style.display = 'none';
+        addressInput.style.display='none';
     }
+    shippingInfoContainer.style.display='block';
+    submitButton.style.display='block';
 }
 
 function handleQuantityChange(event) {
@@ -260,7 +276,7 @@ function fetchItems() {
 
             data.forEach(item => {
                 itemList.innerHTML += `
-                    <div class="item-card" data-item-id="${item.item_id}">
+                    <div class="item-card"  data-item-id="${item.item_id}">
                         <div class="image-container">
                             <img class="card-image" src="public/${item.image_path}" alt="${item.name}">
                         </div>
@@ -278,6 +294,53 @@ function fetchItems() {
     };
     xhr.send();
 }
+function paymentSubmit() {
+    const itemList = document.querySelectorAll(".item-card");
+    let dataList = [];
 
+    itemList.forEach(item => {
+        dataList.push({
+            item_id: item.dataset.itemId,
+            quantity: item.querySelector(".quantity").value
+        });
+    });
+
+    console.log(dataList);
+
+    const payload = JSON.stringify({
+        ajax: 1,
+        controller: "cart",
+        action: "submitOrder",
+        dataList: dataList
+    });
+
+    // Create the request
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "index.php", true);
+    xhr.setRequestHeader("Content-Type", "application/json"); // Set JSON header
+    xhr.timeout = 10000;
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        window.location.href = "index.php?page=paymentSuccess";
+                    } else {
+                        showNotification(response.message, true);
+                    }
+                } catch (e) {
+                    alert("Invalid JSON response from server.", true);
+                }
+            } else {
+                alert("Request failed with status: " + xhr.status, true);
+            }
+        }
+    };
+
+    // Send JSON data
+    xhr.send(payload);
+}
 </script>
 

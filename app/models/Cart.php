@@ -70,5 +70,41 @@ class Cart {
             return ["success" => false, "message" => "An error occurred. Please try again later."];
         }
     }
+    public static function submitOrder($user_id,$itemList){
+        try {
+            $db=Database::connect();
+            $db->begin_transaction();
+            $orderStmt = $db->prepare("INSERT INTO orders (user_id) VALUES (?)");
+            $orderStmt->bind_param("i", $user_id);
+            $orderStmt->execute();
+            $order_id = $db->insert_id;
+            $orderStmt->close();
+            $itemStmt = $db->prepare("INSERT INTO orders_include_items (order_id, item_id, quantity) VALUES (?, ?, ?)");
+
+            foreach ($itemList as $item) {
+                if ($item['quantity'] <= 0) {
+                    throw new Exception("Invalid quantity for item ID: " . $item['item_id']);
+                }
+                $itemStmt->bind_param("iii", $order_id, $item['item_id'], $item['quantity']);
+                if (!$itemStmt->execute()) {
+                    throw new Exception("Failed to insert order item: " . $itemStmt->error);
+                }
+            }
+            $itemStmt->close();
+            $db->commit();
+            return [
+                'success' => true
+            ];
+    
+
+        }
+        catch (mysqli_sql_exception $e) {
+            if ($db && method_exists($db, 'rollback')) {
+                $db->rollback();
+            }    
+            error_log("Cart:submitOrder error: " . $e->getMessage());
+            return ["success" => false, "message" => "An error occurred. Please try again later."];
+        }
+    }
 }
 ?>

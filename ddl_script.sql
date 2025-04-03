@@ -50,7 +50,6 @@ INSERT INTO menu (name, cate, description, image_path, price) VALUES
 drop table if exists orders;
 create table orders (
 	order_id int unsigned primary key AUTO_INCREMENT,
-    status ENUM('in progress','delivered') not null,
     total_price DECIMAL(12,0),
     user_id int unsigned,
     FOREIGN KEY(user_id) references accounts(user_id) on delete set null,
@@ -97,6 +96,3 @@ create table in_cart (
     foreign key(item_id) references menu(item_id) on delete cascade
 );
 
-SELECT c.quantity, m.name, m.price, m.image_path
-FROM in_cart c JOIN menu m ON c.item_id=m.item_id
-WHERE c.user_id=1;

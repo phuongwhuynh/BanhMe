@@ -27,7 +27,7 @@ class PageController {
     }
 
     private static function loadUserView($page){
-        $allowedPages = ["home", "order","history","contact","cart"];
+        $allowedPages = ["home", "order","history","contact","cart","paymentSuccess"];
         if (!in_array($page, $allowedPages)) {
             require_once "../app/views/404.php";
         }
@@ -38,7 +38,14 @@ class PageController {
     }
     private static function loadAdminView($page){
         /*to do*/
-
+        $allowedPages = [];
+        if (!in_array($page, $allowedPages)) {
+            require_once "../app/views/404.php";
+        }
+        else {
+            $content =  "../app/views/$page.php";
+            require_once "../app/views/adminLayout.php";
+        }
     }
 }
 
