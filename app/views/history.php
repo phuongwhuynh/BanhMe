@@ -31,6 +31,7 @@
     </div>
 </div>
 
+<script></script>
 
 <style>
 #history-container {

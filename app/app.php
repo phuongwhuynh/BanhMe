@@ -3,9 +3,8 @@ require_once "../app/include/config.php";
 
 // Function to get raw JSON input
 function getJsonInput() {
-    // Get raw POST data
     $json = file_get_contents('php://input');
-    return json_decode($json, true); // Decode JSON into an associative array
+    return json_decode($json, true); 
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET['ajax']) && $_GET['ajax'] == 1) {
