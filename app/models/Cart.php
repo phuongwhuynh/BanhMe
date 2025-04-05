@@ -91,6 +91,10 @@ class Cart {
                 }
             }
             $itemStmt->close();
+            $deleteStmt = $db->prepare("DELETE FROM in_cart WHERE user_id = ?");
+            $deleteStmt->bind_param("i", $user_id);
+            $deleteStmt->execute();
+            $deleteStmt->close();    
             $db->commit();
             return [
                 'success' => true

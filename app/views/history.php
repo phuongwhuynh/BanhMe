@@ -31,7 +31,36 @@
     </div>
 </div>
 
-<script></script>
+<script>
+function loadHistory() {
+    fetch('index.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            ajax: 1,
+            controller: 'history',
+            action: 'showHistory',
+            limit: 1
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        const container = document.getElementById('history-container');
+        container.innerHTML = '';
+
+        data.forEach((history, index) => {
+            const card = renderHistoryCard(history, index === 0);
+            container.appendChild(card);
+        });
+    })
+    .catch(error => console.error('Error loading history:', error));
+}
+
+document.addEventListener('DOMContentLoaded', loadHistory);
+
+</script>
 
 <style>
 #history-container {
@@ -57,3 +86,4 @@
     height: 2rem;
 }
 </style>
+

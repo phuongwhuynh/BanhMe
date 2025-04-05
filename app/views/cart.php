@@ -219,17 +219,24 @@ function fetchItems() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             const data = JSON.parse(xhr.responseText);
+            const cartContainer = document.querySelector(".cart-container");
+
+            if (data.length === 0) {
+                cartContainer.innerHTML = `<p class="empty-cart-message">Không có sản phẩm nào trong giỏ hàng</p>`;
+                return;
+            }
+
             const itemList = document.getElementById("item-list");
             itemList.innerHTML = "";
 
             data.forEach(item => {
                 itemList.innerHTML += `
-                    <div class="item-card"  data-item-id="${item.item_id}" data-price=${item.price}>
+                    <div class="item-card" data-item-id="${item.item_id}" data-price=${item.price}>
                         <div class="image-container">
                             <img class="card-image" src="public/${item.image_path}" alt="${item.name}">
                         </div>
                         <div class="item-name-container">${item.name}</div>
-                        <div class="item-price-container" >${item.price} VND</div>
+                        <div class="item-price-container">${item.price} VND</div>
                         <div class="quantity-container">
                             <button class="quantity-btn decrease-btn" type="button">&#8722;</button>
                             <input class="quantity" type="number" value="${item.quantity}" min="1">
@@ -243,6 +250,7 @@ function fetchItems() {
     };
     xhr.send();
 }
+
 
 function calculateTotalPrice() {
     let total=0
@@ -258,6 +266,30 @@ function calculateTotalPrice() {
 }
 
 function paymentSubmit() {
+    const shipOption = document.getElementById("ship");
+    const takeoutOption = document.getElementById("takeout");
+    const inplacePayment = document.querySelector('input[name="payment"][value="inplace"]');
+    const transferPayment = document.querySelector('input[name="payment"][value="transfer"]');
+
+    const customerName = document.getElementById("customer_name").value.trim();
+    const customerPhone = document.getElementById("customer_phone").value.trim();
+    const customerAddress = document.getElementById("customer_address").value.trim();
+
+    if (shipOption.checked && !inplacePayment.checked && !transferPayment.checked) {
+        showNotification("Vui lòng chọn phương thức thanh toán.",true);
+        return;
+    }
+
+    if (!customerName || !customerPhone) {
+        showNotification("Vui lòng điền đầy đủ họ tên và số điện thoại.",true);
+        return;
+    }
+
+    if (shipOption.checked && !customerAddress) {
+        showNotification("Vui lòng nhập địa chỉ giao hàng.",true);
+        return;
+    }
+
     const itemList = document.querySelectorAll(".item-card");
     let dataList = [];
 
