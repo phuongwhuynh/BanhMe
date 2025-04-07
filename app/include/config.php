@@ -8,7 +8,8 @@ $controller= [
     "order" => "OrderController",
     "page" => "PageController",
     "user" => "UserController",
-    "cart" => "CartController"
+    "cart" => "CartController",
+    "history"=>"HistoryController"
 ];
 
 // $action = [

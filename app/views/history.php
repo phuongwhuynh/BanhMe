@@ -55,7 +55,7 @@ function loadHistory() {
             container.appendChild(card);
         });
     })
-    .catch(error => console.error('Error loading history:', error));
+    .catch(error => console.log('Error loading history:', error));
 }
 
 document.addEventListener('DOMContentLoaded', loadHistory);
