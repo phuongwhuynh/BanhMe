@@ -11,15 +11,17 @@ create table accounts (
     status ENUM('active','deleted') not null
 );
 
-
+-- username: admin, password:Admin123
+insert into accounts (username, password_hash, role) values 
+('admin','$2a$10$bAoFGz6RkuVAugRLAOX5d.RMX0VBwynP3iVQoiXpEOeR3JZ88XSNe', 'admin');
 
 
 drop table if exists menu;
 create table menu (
 	item_id int unsigned primary key AUTO_INCREMENT,
-    name VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    name VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
     cate enum('sweet','savory','raw') not null,
-	description TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+	description TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci,
     image_path VARCHAR(512), 
 	price DECIMAL(10,2) NOT NULL CHECK (price >= 0)
 );
@@ -95,4 +97,6 @@ create table in_cart (
     foreign key(user_id) references accounts(user_id) on delete cascade,
     foreign key(item_id) references menu(item_id) on delete cascade
 );
+
+
 

@@ -5,20 +5,16 @@ class OrderController {
     public static function index() {
         return Order::getAll();
     }
-    public static function countOrders($categories) {
-        return Order::countAll($categories);
-    }
-    public static function getPaginated($page =1, $limit=12, $sort, $categories) {
-        return Order:: getPaginated($page,$limit,$sort, $categories);
-    }
+
     public static function handlePagination() {
         $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 12;
         $page = isset($_GET['pageNum']) ? (int)$_GET['pageNum'] : 1;
         $sort = isset($_GET['sort']) ? $_GET['sort'] : "name_asc";
         $categories=isset($_GET['categories']) ?explode(",", $_GET["categories"]) : [];
+        $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
 
-        $orders = self::getPaginated($page, $limit, $sort, $categories);
-        $totalProducts = self::countOrders($categories);
+        $orders = Order::getPaginated($page, $limit, $sort, $categories, $searchTerm);
+        $totalProducts = Order::countAll($categories, $searchTerm);
 
         $totalPages = ceil($totalProducts / $limit);
     

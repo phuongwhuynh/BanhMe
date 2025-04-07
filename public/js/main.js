@@ -57,8 +57,13 @@ function logout() {
     xhr.send(formData);     
 }
 
-window.onclick = function(event) {
-    if (!event.target.closest('.profile-container')) {
-        document.getElementById("dropdown-menu").style.display = "none";
+window.addEventListener("DOMContentLoaded", () => {
+    const userRole = document.body.getAttribute("data-user-role");
+    if (userRole === "user") {
+        window.onclick = function(event) {
+            if (!event.target.closest('.profile-container')) {
+                document.getElementById("dropdown-menu").style.display = "none";
+            }
+        };
     }
-};
+});

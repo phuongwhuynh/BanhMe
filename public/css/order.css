@@ -1,4 +1,9 @@
 
+.highlight {
+    font-weight: bold;
+    background-color: yellow;
+}
+
 .order-container {
     display: flex;
     flex-direction: row;
@@ -40,8 +45,6 @@
     white-space: nowrap;
     text-shadow: 1px 1px 2px var(--brown4);
 }
-
-
 
 
 
@@ -123,7 +126,13 @@
     font-weight: bold;
     background-color: var(--cream);
 }
-
+.search-bar {
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    color: var(--brown3);
+    font-weight: bold;
+    font-size: 1rem;
+}
 .right-container {
     flex: 1;
     display: flex;
@@ -411,6 +420,8 @@
     }
 }
 
+
+
 @media (max-width: 768px) {
     .order-container {
         flex-direction: column;
@@ -424,7 +435,6 @@
         grid-template-columns: repeat(1, 1fr);
         grid-template-rows: repeat(12, auto);
     }
-
     .modal-content {
         width: 90%;
         height: auto;

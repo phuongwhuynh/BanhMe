@@ -19,12 +19,10 @@
         <option value="name_asc">Tên (A-Z)</option>
         <option value="name_desc">Tên (Z-A)</option>
         <option value="price_asc">Giá (Thấp-Cao)</option>
-        <option value="price_desc">Giá (Cap-Thấp)</option>
+        <option value="price_desc">Giá (Cao-Thấp)</option>
       </select>
     </div>
-    <div class="search-container"> 
-      to-do
-    </div>
+    <input type="text" id="searchInput" class="search-bar" placeholder="Tìm kiếm...">
   </div>
   <!-- Product List -->
   <div class="right-container">

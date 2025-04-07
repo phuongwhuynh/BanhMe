@@ -38,7 +38,7 @@ function login(event){
         if (xhr.status==200){
           let response=JSON.parse(xhr.responseText);
           if (response.success) {
-            window.location.href = "index.php?page=home";
+            window.location.href = "index.php";
           }
           else {
             showLoginError(response.message);

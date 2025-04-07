@@ -46,8 +46,12 @@ if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET['ajax']) && $_GET['ajax'
 }
 
 else {
-    // Handle page loading for non-AJAX requests (regular page loads)
-    $page = isset($_GET['page']) ? $_GET['page'] : 'home';
+    if ($_SESSION['user_role']=='admin'){
+        $page = isset($_GET['page']) ? $_GET['page'] : 'menuAdmin';
+    }
+    else {
+        $page = isset($_GET['page']) ? $_GET['page'] : 'home';
+    }
     PageController::loadPage($page);
 }
 

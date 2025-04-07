@@ -18,7 +18,7 @@
 
 
 </head>
-<body>
+<body data-user-role="<?= $_SESSION['user_role'] ?? '' ?>">
   <header>
     <div class="left-header">
       <a href="index.php?page=home" class="logo">Bánh Me!</a>
