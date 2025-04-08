@@ -38,7 +38,12 @@ function login(event){
         if (xhr.status==200){
           let response=JSON.parse(xhr.responseText);
           if (response.success) {
-            window.location.href = "index.php";
+            if (response.user_role=='admin'){
+              window.location.href="index.php?page=menuAdmin";
+            }
+            else {
+              window.location.href = "index.php?page=home";
+            }
           }
           else {
             showLoginError(response.message);

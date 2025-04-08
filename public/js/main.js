@@ -1,25 +1,33 @@
-function showNotification(message, isError = false) {
-    let notification = document.getElementById("notification-popup");
-    notification.textContent = message;
-    notification.classList.remove("hidden");
+let notificationTimeout = null;
 
-    if (isError) {
-        notification.classList.add("error");
-    } else {
-        notification.classList.remove("error");
-    }
+function showNotification(message = "Item added to cart", isError = false) {
+    const popup = document.getElementById("notification-popup");
+    const content = popup.querySelector(".notification-content");
 
-    notification.style.display = "block";
+    content.textContent = message;
+    content.classList.remove("pulse", "error");
 
-    // Auto-hide after 3 seconds
-    setTimeout(() => {
-        notification.style.opacity = "0";
+    if (isError) content.classList.add("error");
+
+    // Re-trigger pulse animation
+    void content.offsetWidth;
+    content.classList.add("pulse");
+
+    popup.style.display = "block";
+    popup.style.opacity = "1";
+
+    if (notificationTimeout) clearTimeout(notificationTimeout);
+
+    notificationTimeout = setTimeout(() => {
+        popup.style.opacity = "0";
         setTimeout(() => {
-            notification.style.display = "none";
-            notification.style.opacity = "1";
+            popup.style.display = "none";
         }, 500);
-    }, 3000);
+        notificationTimeout = null;
+    }, 1000);
 }
+
+
 
 function toggleDropdown() {
     let menu = document.getElementById("dropdown-menu");

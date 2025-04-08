@@ -1,16 +1,3 @@
-body {
-    display: flex;
-    flex-direction: column; 
-    height: 100vh;
-    width: 100vw; 
-    font-family: 'Trebuchet MS', sans-serif;
-    background-color: var(--brown1);   
-    color: var(--brown3);
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    overflow-y: hidden;
-}
 
 header {
     position: relative;
@@ -151,6 +138,14 @@ nav ul li {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 1000;
+    pointer-events: none; /* Optional */
+}
+
+.notification-content {
     padding: 20px 30px;
     background: #28a745;
     color: var(--cream);
@@ -159,14 +154,23 @@ nav ul li {
     text-align: center;
     border-radius: 8px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    display: none;
-    transition: opacity 0.5s ease-in-out;
-    z-index: 1000;
+    transform-origin: center;
+    will-change: transform;
 }
 
-#notification-popup.error {
-    background: #dc3545; /* Red color for errors */
+.notification-content.pulse {
+    animation: pulseAnim 0.3s ease;
 }
+.notification-content.error {
+    background: #dc3545; 
+}
+
+@keyframes pulseAnim {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
 
 .hidden {
     display: none;

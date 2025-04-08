@@ -57,16 +57,31 @@ function createDiacriticsInsensitiveRegex(term) {
     return new RegExp(regexStr, 'gi'); // 'gi' for global, case-insensitive matching
 }
 document.addEventListener('DOMContentLoaded', function () {
-    fetchProducts();  // Fetch products when the page loads
+    let debounceTimer;
+    let currentPage = 1;
 
-    let debounceTimer;  // Declare the debounce timer variable inside the DOMContentLoaded listener
-    
+    fetchProducts();
+
     document.getElementById('searchInput').addEventListener('input', function () {
-        // This will trigger a fetch call with the updated search term.
-        clearTimeout(debounceTimer);  // Clear the debounce timer to prevent unnecessary requests
-        debounceTimer = setTimeout(() => fetchProducts(1), 300);  // Wait 300ms before calling fetchProducts
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => fetchProducts(1), 300);
+    });
+
+    document.getElementById("sortSelect").addEventListener("change", () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => fetchProducts(1), 300);
+    });
+
+    document.querySelectorAll('.toggle').forEach(button => {
+        button.addEventListener('click', function () {
+            this.classList.toggle("on");
+            clearTimeout(debounceTimer);
+            currentPage = 1;
+            debounceTimer = setTimeout(() => fetchProducts(1), 300);
+        });
     });
 });
+
 
 function fetchProducts(page = 1) {
     const sort = document.getElementById("sortSelect").value; 
@@ -166,12 +181,6 @@ function fetchProducts(page = 1) {
     xhr.send();
 }
 
-function cateToggle(button) {
-    button.classList.toggle("on"); 
-    clearTimeout(debounceTimer);
-    currentPage = 1;
-    debounceTimer = setTimeout(() => fetchProducts(1), 300);
-}
 
 function openModal(item_id, image_path, name, price, description) {
     document.getElementById("quantity").value = 1;
@@ -212,7 +221,7 @@ function decreaseQuantity() {
         quantityInput.value = parseInt(quantityInput.value) - 1;
     }
     if (parseInt(quantityInput.value) === 1) {
-        decreaseBtn.disabled = true;
+        document.getElementById('decrease-quantity').disabled = true;
     }
 }
 

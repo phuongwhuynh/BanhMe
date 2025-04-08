@@ -15,7 +15,7 @@ class User {
                 $_SESSION['user_role'] = $user['role']; 
                 $_SESSION['user_id']=$user['user_id'];
                 $_SESSION['username']=$username;
-                return ["success" => true];
+                return ["success" => true,"user_role" => $user['role']];
             } else {
                 return ["success" => false, "message" => "Incorrect username or password!"];
             }

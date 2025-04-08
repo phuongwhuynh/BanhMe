@@ -7,3 +7,16 @@
     --brown4: #4B3724;
   }
   
+  body {
+    display: flex;
+    flex-direction: column; 
+    height: 100vh;
+    width: 100vw; 
+    font-family: 'Trebuchet MS', sans-serif;
+    background-color: var(--brown1);   
+    color: var(--brown3);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}

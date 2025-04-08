@@ -8,9 +8,9 @@
         <span class="filter-title">Lọc</span>
       </div>
       <div class="button-container">
-        <button data-category="savory" class="toggle on" onclick="cateToggle(this)">Bánh Mì Mặn</button>
-        <button data-category="sweet" class="toggle on" onclick="cateToggle(this)">Bánh Mì Ngọt</button>
-        <button data-category="raw" class="toggle on" onclick="cateToggle(this)">Bánh Mì Nguyên Bản</button>
+        <button data-category="savory" class="toggle on" >Bánh Mì Mặn</button>
+        <button data-category="sweet" class="toggle on" >Bánh Mì Ngọt</button>
+        <button data-category="raw" class="toggle on">Bánh Mì Nguyên Bản</button>
       </div>
     </div>
     <div class="sort-container">

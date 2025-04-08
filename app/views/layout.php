@@ -60,9 +60,10 @@
   <footer>
     &copy; 2025 Bánh Me! All Rights Reserved.
   </footer>
-  <div id="notification-popup" class="hidden">
-    <span id="notification-message"></span>
+  <div id="notification-popup">
+    <div class="notification-content"></div>
   </div>
+
 
 </body>
 </html>
