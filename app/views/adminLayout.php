@@ -19,39 +19,33 @@
 
 </head>
 <body>
-<nav class="sidebar">
-  <ul>
-    <li>
-      <a href="index.php?page=menuAdmin" class="navbar-button <?php echo ($page == 'menuAdmin') ? 'active' : ''; ?>" title="Menu">
-        <i class="fas fa-table"></i>
-      </a>
-    </li>
-    <li>
-      <a href="index.php?page=log" class="navbar-button <?php echo ($page == 'log') ? 'active' : ''; ?>" title="History">
-        <i class="fas fa-receipt"></i>
-      </a>
-    </li>
-    <li>
-      <a href="index.php?page=setting" title="Settings">
-        <i class="fas fa-cog"></i>
-      </a>
-    </li>
-  </ul>
-</nav>
-
-
 <style>
+body {
+  display: flex;
+  flex-direction: row; 
+  height: 100vh;
+  width: 100vw; 
+  font-family: 'Trebuchet MS', sans-serif;
+  background-color: var(--brown1);   
+  color: var(--brown3);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+main {
+  flex:1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
 .sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 3.5rem;
   height: 100vh;
   background-color: var(--brown3);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 1rem;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
 }
 
@@ -61,15 +55,23 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  width: 100%;
 }
 
 .sidebar li {
   display: flex;
+  width: 100%;
   justify-content: center;
 }
 
 .sidebar a {
+  display: flex;                 
+  align-items: center;          
+  justify-content: center;     
+  box-sizing: border-box;
+
+  width: 100%;
+  height: 3.5rem;
   color: white;
   font-size: 1.5rem;
   text-decoration: none;
@@ -80,10 +82,34 @@
   color: var(--brown1);
 }
 
-.navbar-button:active {
-  background-color: var(--brown1);
+.sidebar a.active {
+  background-color: var(--brown2);
 }
 
 </style>
+<nav class="sidebar">
+  <ul>
+    <li>
+      <a href="index.php?page=menuAdmin" class="<?php echo ($page == 'menuAdmin') ? 'active' : ''; ?>" title="Menu">
+        <i class="fas fa-table"></i>
+      </a>
+    </li>
+    <li>
+      <a href="index.php?page=log" class="<?php echo ($page == 'log') ? 'active' : ''; ?>" title="History">
+        <i class="fas fa-receipt"></i>
+      </a>
+    </li>
+    <li>
+      <a href="index.php?page=setting" class="<?php echo ($page == 'setting') ? 'active' : ''; ?>" title="Settings">
+        <i class="fas fa-cog"></i>
+      </a>
+    </li>
+  </ul>
+</nav>
+<main>
+  <?php include($content); ?>
+</main>
+
+
 </body>
 </html>

@@ -38,7 +38,7 @@ class PageController {
     }
     private static function loadAdminView($page){
         /*to do*/
-        $allowedPages = ['menuAdmin','log'];
+        $allowedPages = ['menuAdmin','log','setting'];
         if (!in_array($page, $allowedPages)) {
             require_once "../app/views/404.php";
         }

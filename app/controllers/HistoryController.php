@@ -18,6 +18,21 @@ class HistoryController {
         header('Content-Type: application/json');
         echo json_encode($response);
     }
+    public static function showAllHistory($data){
+        if (!$data || !isset($data['limit']) || !isset($data['offset'])) {
+            echo json_encode(["success" => false, "message" => "Invalid JSON input"]);
+            return;
+        }
+        $userId = $_SESSION['user_id'] ?? null;
+    
+        if (!$userId) {
+            echo json_encode(["success" => false, "message" => "User not authenticated"]);
+            return;
+        }
 
+        $response= History::getAllHistory($data['limit'],$data['offset']);
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
 }
 ?>
