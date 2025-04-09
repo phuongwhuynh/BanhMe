@@ -2,27 +2,27 @@
 require_once "Database.php";
 
 class Order {
-    public static function search($query) {
-        $db = Database::connect();
-        $query = $db->real_escape_string($query);
-        $result = $db->query("SELECT name FROM menu WHERE name LIKE '%$query%' LIMIT 5");
+    // public static function search($query) {
+    //     $db = Database::connect();
+    //     $query = $db->real_escape_string($query);
+    //     $result = $db->query("SELECT name FROM menu WHERE name LIKE '%$query%' LIMIT 5");
 
-        $items = [];
-        while ($row = $result->fetch_assoc()) {
-            $items[] = $row['name'];
-        }
-        return $items;
-    }
+    //     $items = [];
+    //     while ($row = $result->fetch_assoc()) {
+    //         $items[] = $row['name'];
+    //     }
+    //     return $items;
+    // }
 
-    public static function getAll(){
-        $db=Database::connect();
-        $result=$db->query("SELECT * FROM menu");
-        $items=[];
-        while ($row=$result->fetch_assoc()) {
-            $items[]=$row;
-        }
-        return $items;
-    }
+    // public static function getAll(){
+    //     $db=Database::connect();
+    //     $result=$db->query("SELECT * FROM menu");
+    //     $items=[];
+    //     while ($row=$result->fetch_assoc()) {
+    //         $items[]=$row;
+    //     }
+    //     return $items;
+    // }
     
     // public static function getPaginated($page, $limit, $sort, $categories) {
     //     $db = Database::connect();
@@ -111,7 +111,7 @@ class Order {
             $orderBy = "price DESC";
         }
     
-        $query = "SELECT * FROM menu WHERE $inCate $searchCondition ORDER BY $orderBy LIMIT ?, ?";
+        $query = "SELECT * FROM menu WHERE status = 'active' AND $inCate $searchCondition ORDER BY $orderBy LIMIT ?, ?";
         $stmt = $db->prepare($query);
     
         // Prepare parameter types
@@ -149,7 +149,7 @@ class Order {
         }
     
         // Base query
-        $query = "SELECT COUNT(*) as total FROM menu WHERE cate IN (" . implode(",", array_fill(0, count($categories), "?")) . ")";
+        $query = "SELECT COUNT(*) as total FROM menu WHERE status = 'active' AND cate IN (" . implode(",", array_fill(0, count($categories), "?")) . ")";
     
         // Add search condition if a search term is provided
         if (!empty($searchTerm)) {
@@ -163,11 +163,9 @@ class Order {
     
         if (!empty($searchTerm)) {
             $searchTerm = "%$searchTerm%";
-            $types .= "s"; // For the search term
+            $types .= "s";
         }
     
-        // Bind parameters using the correct method
-        // The first parameters are the categories, followed by the search term if it exists
         if (!empty($searchTerm)) {
             $stmt->bind_param($types, ...array_merge($categories, [$searchTerm]));
         } else {

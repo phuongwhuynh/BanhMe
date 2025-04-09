@@ -8,7 +8,7 @@ create table accounts (
 	username varchar(50) unique not null,
     password_hash varchar(255) not null,
     role ENUM('user','admin') not null,
-    status ENUM('active','deleted') not null
+    status ENUM('active','deleted') default 'active' not null
 );
 
 -- username: admin, password:Admin123
@@ -23,7 +23,8 @@ create table menu (
     cate enum('sweet','savory','raw') not null,
 	description TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci,
     image_path VARCHAR(512), 
-	price DECIMAL(10,2) NOT NULL CHECK (price >= 0)
+	price DECIMAL(10,2) NOT NULL CHECK (price >= 0),
+    status enum('active','delete') not null DEFAULT 'active'
 );
 
 INSERT INTO menu (name, cate, description, image_path, price) VALUES

@@ -4,13 +4,15 @@ require_once "../app/controllers/PageController.php";
 require_once "../app/controllers/UserController.php";
 require_once "../app/controllers/CartController.php";
 require_once "../app/controllers/HistoryController.php";
+require_once "../app/controllers/AdminController.php";
 
 $controller= [
     "order" => "OrderController",
     "page" => "PageController",
     "user" => "UserController",
     "cart" => "CartController",
-    "history"=>"HistoryController"
+    "history"=>"HistoryController",
+    "admin" => "AdminController"
 ];
 
 // $action = [

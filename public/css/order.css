@@ -1,7 +1,7 @@
 
 .highlight {
-    font-weight: bold;
-    background-color: yellow;
+    font-weight: bolder;
+    background-color: var(--brown4);
 }
 
 .order-container {
