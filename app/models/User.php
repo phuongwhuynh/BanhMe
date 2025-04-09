@@ -4,7 +4,7 @@ class User {
     static public function authenticate($username,$password) {
         try {
             $db = Database::connect();
-            $query = "SELECT user_id, password_hash,role FROM accounts WHERE username = ?";
+            $query = "SELECT user_id, password_hash,role FROM accounts WHERE username = ? and status='active'";
             $stmt = $db->prepare($query);
             $stmt->bind_param("s", $username);  // 's' for string
             $stmt->execute();
