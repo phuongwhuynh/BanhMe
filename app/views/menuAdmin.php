@@ -26,7 +26,10 @@
   </div>
   <!-- Product List -->
   <div class="right-container">
-    <button style="margin: 1rem;" onclick="openCreateModal()"> Thêm món mới</button>
+    <button style="margin: 1rem;" onclick="openCreateModal()">
+        <i class="fas fa-plus-circle" style="margin-right: 0.5rem;"></i>
+        Thêm món mới
+    </button>    
     <div class="scroll-container">
       <div id="product-list" class="products-container"></div>
 
@@ -592,8 +595,7 @@ function addCart(event) {
 
 <style>
 .highlight {
-    font-weight: bolder;
-    background-color: var(--brown4);
+    background-color:	#FFDAB9	;
 }
 
 .order-container {

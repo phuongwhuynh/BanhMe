@@ -1,7 +1,7 @@
-<h1>Liên hệ</h1>
-
+<div id="wrapper">
 <div class="contact-container">
   <div class="contact-info">
+  <h1>Liên hệ</h1>
     <p><strong>Địa chỉ:</strong> 268 Đ. Lý Thường Kiệt, Phường 14, Quận 10, Hồ Chí Minh</p>
     <p><strong>Email:</strong> lienhe@example.com</p>
     <p><strong>Số điện thoại:</strong> 0123 456 789</p>
@@ -9,21 +9,44 @@
 
   <div id="map" style="height: 400px; width: 100%; border-radius: 10px;"></div>
 </div>
-
+</div>
 <style>
-  .contact-container {
+  #wrapper {
+    position: relative;
+    width: 100%;
+    flex:1; /* or a specific height */
     display: flex;
-    flex-direction: column;
-    gap: 20px;
-    max-width: 800px;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem; /* add some breathing room */
+    box-sizing: border-box;
+    overflow: auto;
+  }
+
+  .contact-container {
+    width: 80%;
+    max-width: 60rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
     margin: auto;
-    padding: 20px;
+    padding: 1.5rem;
+    background-color: var(--cream);
+    border-radius: 0.5rem;
+    flex-wrap: wrap; 
   }
 
   .contact-info {
-    font-size: 18px;
+    flex:1;
+    font-size: 1.2rem;
     line-height: 1.6;
   }
+  #map {
+    flex: 1;
+    /* height: 400px; */
+    border-radius: 0.5rem;
+  }
+
 </style>
 
 <script>
