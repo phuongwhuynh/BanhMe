@@ -105,6 +105,7 @@ SELECT
 	oi.order_id, 
 	t.total_price, 
 	t.created_at, 
+    t.user_id,
 	oi.item_id, 
 	i.name AS item_name, 
 	i.image_path, 
@@ -114,7 +115,8 @@ FROM
 	(SELECT 
 		o.order_id, 
 		o.total_price, 
-		o.created_at
+		o.created_at,
+        o.user_id
 	FROM orders o
 	ORDER BY o.created_at DESC
 	LIMIT 10 OFFSET 0) t 
