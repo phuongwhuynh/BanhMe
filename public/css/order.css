@@ -1,7 +1,13 @@
 
 .highlight {
     font-weight: bolder;
-    background-color: var(--brown4);
+    background-color: var(--highlighter);
+}
+.no-items {
+    text-align: center;
+    font-size: 1.2rem;
+    color: gray;
+    margin-top: 20px;
 }
 
 .order-container {
@@ -28,6 +34,7 @@
 }
 /* Base Styles */
 .left-container {
+    /* flex: 1; */
     display: flex;
     margin: 0.5rem 3rem;
     flex-direction: column;
@@ -132,6 +139,7 @@
     color: var(--brown3);
     font-weight: bold;
     font-size: 1rem;
+    margin-bottom: 1rem;
 }
 .right-container {
     display: flex;
@@ -142,6 +150,7 @@
 }
 
 .scroll-container {
+    flex: 1;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -311,6 +320,9 @@
     background-color: var(--brown3);
     font-weight: bolder;
     color: var(--cream);
+    display: flex;         
+    align-items: center;   
+    justify-content: center; 
 }
 
 .quantity-btn:disabled {
@@ -414,7 +426,7 @@
 }
 
 
-@media (max-width: 1200px) {
+@media (max-width: 1024px) {
     .products-container {
         grid-template-columns: repeat(2, minmax(0, 1fr)); 
         grid-template-rows: repeat(6, auto);  
@@ -424,18 +436,34 @@
 
 
 @media (max-width: 768px) {
+    main {
+        overflow-y: auto;
+    }
+    main::-webkit-scrollbar {
+        width: 0.5rem;
+    }
+    main::-webkit-scrollbar-track {
+        background: var(--brown2);
+    }
+    
+    main::-webkit-scrollbar-thumb {
+        background: var(--brown3);
+    }
+    main::-webkit-scrollbar-thumb:hover {
+        background: var(--brown4); 
+    }
     .order-container {
         flex-direction: column;
-        overflow-y: auto;
-        scrollbar-gutter: stable;    
+        align-items: center;
+        flex: none;
+        /* overflow-y: scroll;
+        scrollbar-gutter: stable;     */
     }
+
     .scroll-container {
-        overflow-y: hidden;
+        overflow-y: auto;
     }
-    .products-container {
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-rows: repeat(12, auto);
-    }
+
     .modal-content {
         width: 90%;
         height: auto;
@@ -453,11 +481,16 @@
         font-size: 1.25rem;
     }
 }
+@media (max-width: 600px) {
+    .products-container {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: repeat(12, auto);
+    }
+}
 
 @media (max-width: 480px) {
-    .title {
-        font-size: 1.5rem;
-    }
+
+
 
     .modal-name {
         font-size: 1.5rem;

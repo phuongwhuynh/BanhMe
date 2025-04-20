@@ -1,28 +1,30 @@
 <div class="order-container">
   <div class="left-container">
-    <div class="title-container">
-      <h1 class="title">Thực đơn</h1>
-    </div>
-    <div class="cate-container">
-      <div class="filter-title-container">
-        <span class="filter-title">Lọc</span>
+    <!-- <div class="left-center-container"> -->
+      <div class="title-container">
+        <h1 class="title">Thực đơn</h1>
       </div>
-      <div class="button-container">
-        <button data-category="savory" class="toggle on" >Bánh Mì Mặn</button>
-        <button data-category="sweet" class="toggle on" >Bánh Mì Ngọt</button>
-        <button data-category="raw" class="toggle on">Bánh Mì Nguyên Bản</button>
+      <input type="text" id="searchInput" class="search-bar" placeholder="Tìm kiếm...">
+      <div class="cate-container">
+        <div class="filter-title-container">
+          <span class="filter-title">Lọc</span>
+        </div>
+        <div class="button-container">
+          <button data-category="savory" class="toggle on" >Bánh Mì Mặn</button>
+          <button data-category="sweet" class="toggle on" >Bánh Mì Ngọt</button>
+          <button data-category="raw" class="toggle on">Bánh Mì Lạt</button>
+        </div>
       </div>
+      <div class="sort-container">
+        <span class="sort-text">Sắp xếp:</span>
+        <select class="sorter" id="sortSelect" onchange="fetchProducts(currentPage)">
+          <option value="name_asc">Tên (A-Z)</option>
+          <option value="name_desc">Tên (Z-A)</option>
+          <option value="price_asc">Giá (Thấp-Cao)</option>
+          <option value="price_desc">Giá (Cao-Thấp)</option>
+        </select>
+      <!-- </div> -->
     </div>
-    <div class="sort-container">
-      <span class="sort-text">Sắp xếp:</span>
-      <select class="sorter" id="sortSelect" onchange="fetchProducts(currentPage)">
-        <option value="name_asc">Tên (A-Z)</option>
-        <option value="name_desc">Tên (Z-A)</option>
-        <option value="price_asc">Giá (Thấp-Cao)</option>
-        <option value="price_desc">Giá (Cao-Thấp)</option>
-      </select>
-    </div>
-    <input type="text" id="searchInput" class="search-bar" placeholder="Tìm kiếm...">
   </div>
   <!-- Product List -->
   <div class="right-container">

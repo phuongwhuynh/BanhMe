@@ -7,45 +7,10 @@
     <p><strong>Số điện thoại:</strong> 0123 456 789</p>
   </div>
 
-  <div id="map" style="height: 400px; width: 100%; border-radius: 10px;"></div>
+  <div id="map" ></div>
 </div>
 </div>
 <style>
-  #wrapper {
-    position: relative;
-    width: 100%;
-    flex:1; /* or a specific height */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem; /* add some breathing room */
-    box-sizing: border-box;
-    overflow: auto;
-  }
-
-  .contact-container {
-    width: 80%;
-    max-width: 60rem;
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    margin: auto;
-    padding: 1.5rem;
-    background-color: var(--cream);
-    border-radius: 0.5rem;
-    flex-wrap: wrap; 
-  }
-
-  .contact-info {
-    flex:1;
-    font-size: 1.2rem;
-    line-height: 1.6;
-  }
-  #map {
-    flex: 1;
-    /* height: 400px; */
-    border-radius: 0.5rem;
-  }
 
 </style>
 
