@@ -2,9 +2,9 @@
 require_once "../app/models/Order.php";
 
 class OrderController {
-    public static function index() {
-        return Order::getAll();
-    }
+    // public static function index() {
+    //     return Order::getAll();
+    // }
 
     public static function handlePagination() {
         $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 12;

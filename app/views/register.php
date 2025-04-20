@@ -119,7 +119,6 @@ function showRegisterError(message) {
 }
 
 function validatePassword(password) {
-  // Kiểm tra yêu cầu mật khẩu
   const minLength = 8;
   const hasUpperCase = /[A-Z]/.test(password);
   const hasLowerCase = /[a-z]/.test(password);
