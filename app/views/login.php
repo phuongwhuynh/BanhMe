@@ -1,4 +1,4 @@
-<div class="login-container">
+<div class="logger-container">
   <h2>Đăng nhập</h2>
   <div id="login-error" class="hidden"></div>
 
@@ -39,7 +39,7 @@ function login(event){
           let response=JSON.parse(xhr.responseText);
           if (response.success) {
             if (response.user_role=='admin'){
-              window.location.href="index.php?page=menuAdmin";
+              window.location.href="index.php?page=menu";
             }
             else {
               window.location.href = "index.php?page=home";

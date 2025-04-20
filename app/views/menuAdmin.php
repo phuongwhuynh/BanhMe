@@ -3,6 +3,7 @@
     <div class="title-container">
       <h1 class="title">Thực đơn</h1>
     </div>
+    <input type="text" id="searchInput" class="search-bar" placeholder="Tìm kiếm...">
     <div class="cate-container">
       <div class="filter-title-container">
         <span class="filter-title">Lọc</span>
@@ -10,7 +11,7 @@
       <div class="button-container">
         <button data-category="savory" class="toggle on" >Bánh Mì Mặn</button>
         <button data-category="sweet" class="toggle on" >Bánh Mì Ngọt</button>
-        <button data-category="raw" class="toggle on">Bánh Mì Nguyên Bản</button>
+        <button data-category="raw" class="toggle on">Bánh Mì Lạt</button>
       </div>
     </div>
     <div class="sort-container">
@@ -22,15 +23,14 @@
         <option value="price_desc">Giá (Cao-Thấp)</option>
       </select>
     </div>
-    <input type="text" id="searchInput" class="search-bar" placeholder="Tìm kiếm...">
   </div>
   <!-- Product List -->
   <div class="right-container">
-    <button style="margin: 1rem;" onclick="openCreateModal()">
-        <i class="fas fa-plus-circle" style="margin-right: 0.5rem;"></i>
-        Thêm món mới
-    </button>    
     <div class="scroll-container">
+      <button class="add-button" style="margin: 1rem;" onclick="openCreateModal()">
+          <i class="fas fa-plus-circle" style="margin-right: 0.5rem;"></i>
+          Thêm món mới
+      </button>  
       <div id="product-list" class="products-container"></div>
 
       <!-- Pagination -->
@@ -45,38 +45,40 @@
 <!-- Modal -->
 <div class="product-modal" id="productModal">
   <div class="modal-content">
-  <div id="image-wrapper" class="image-wrapper">
-    <img id="modal-image" class="modal-image" src="" alt="">
+    <div class="modal-body">
+        <div id="image-wrapper" class="image-wrapper">
+        <img id="modal-image" class="modal-image" src="" alt="">
+        </div>
+        <label id="modal-image-label" for="modal-image-input" style="display: none">Chọn ảnh mới:<span style="color: red">*</span></label>
+        <input id="modal-image-input" type="file" accept="image/*" style="display: none">
+        <div class="modal-title" id="modal-title">
+            <span id="modal-item-id" name="item_id"> </span>
+            <span id="modal-name" class="modal-name"></span>
+            <div class="edit-container" style="display: none">
+            <label for="modal-name-input" style="display: none">
+                Tên món: <span style="color: red">*</span>
+            </label>
+            <input type="text" id="modal-name-input" class="modal-name" style="display: none;" required>
+            </div>
+            <span id="modal-price" class="modal-price"></span>
+            <div class="edit-container" style="display: none">
+            <label for="modal-price-input" style="display: none">
+                Giá: <span style="color: red">*</span>
+            </label>
+            <input type="number" id="modal-price-input" class="modal-price" min="0" step="1000" style="display: none;" required>
+            </div>
+        </div> 
+        <p id="modal-description" class="modal-description"></p>
+        <label id="modal-description-label" for="modal-description-input" style="display: none">Mô tả: <small style="color: gray;">(tùy chọn)</small></label>
+        <textarea id="modal-description-input" class="modal-description" style="display: none;"></textarea>
+
+        <div class="modal-actions">
+            <button type="button" id="edit-button" onclick="enableEditMode()">Chỉnh sửa</button>
+            <button type="button" id="save-button" style="display:none;" onclick="submitEdit()">Lưu</button>
+            <button type="button" id="delete-button" style="display:none;" onclick="deleteItem()">Xóa</button>
+            <button type="button" id="create-button" style="display:none;" onclick="submitCreate()">Tạo</button>
+        </div>
     </div>
-    <label id="modal-image-label" for="modal-image-input" style="display: none">Chọn ảnh mới:<span style="color: red">*</span></label>
-    <input id="modal-image-input" type="file" accept="image/*" style="display: none">
-    <div class="modal-title">
-        <span id="modal-item-id" name="item_id"> </span>
-        <span id="modal-name" class="modal-name"></span>
-
-        <label for="modal-name-input" style="display: none">
-            Tên món: <span style="color: red">*</span>
-        </label>
-        <input type="text" id="modal-name-input" class="modal-name" style="display: none;" required>
-
-        <span id="modal-price" class="modal-price"></span>
-
-        <label for="modal-price-input" style="display: none">
-            Giá: <span style="color: red">*</span>
-        </label>
-        <input type="number" id="modal-price-input" class="modal-price" min="0" step="1000" style="display: none;" required>
-    </div> 
-    <p id="modal-description" class="modal-description"></p>
-    <label id="modal-description-label" for="modal-description-input" style="display: none">Mô tả: <small style="color: gray;">(tùy chọn)</small></label>
-    <textarea id="modal-description-input" class="modal-description" style="display: none;"></textarea>
-
-    <div class="modal-actions">
-        <button type="button" id="edit-button" onclick="enableEditMode()">Chỉnh sửa</button>
-        <button type="button" id="save-button" style="display:none;" onclick="submitEdit()">Lưu</button>
-        <button type="button" id="delete-button" style="display:none;" onclick="deleteItem()">Xóa</button>
-        <button type="button" id="create-button" style="display:none;" onclick="submitCreate()">Tạo</button>
-    </div>
-
     <button class="close-modal" onclick="document.getElementById('productModal').style.display='none'">X</button>
   </div>
 </div>
@@ -91,9 +93,13 @@ function openCreateModal() {
     document.getElementById("modal-image").src = "";
 
     // Hide spans
+    document.getElementById("modal-title").classList.add("edit");
     document.getElementById("modal-name").style.display = "none";
     document.getElementById("modal-price").style.display = "none";
     document.getElementById("modal-description").style.display = "none";
+    document.querySelectorAll(".edit-container").forEach(function(element) {
+      element.style.display = "flex";
+    });
 
     // Show inputs and labels
     document.getElementById("modal-image-input").style.display = "inline-block";
@@ -128,8 +134,12 @@ function openModal(item_id, image_path, name, price, description) {
     document.getElementById("modal-price-input").value = Math.floor(price);
     document.getElementById("modal-description-input").value = description;
     document.getElementById("modal-image-input").value = "";
+    document.querySelectorAll(".edit-container").forEach(function(element) {
+      element.style.display = "none";
+    });
 
     // Show spans
+    document.getElementById("modal-title").classList.remove("edit");
     document.getElementById("modal-name").style.display = "inline-block";
     document.getElementById("modal-price").style.display = "inline-block";
     document.getElementById("modal-description").style.display = "block";
@@ -163,6 +173,10 @@ function enableEditMode() {
     document.getElementById("modal-description").style.display = "none";
 
     // Show inputs and labels
+    document.querySelectorAll(".edit-container").forEach(function(element) {
+      element.style.display = "flex";
+    });
+    document.getElementById("modal-title").classList.add("edit");
     document.getElementById("modal-image-input").style.display = "inline-block";
     document.getElementById("modal-image-label").style.display = "inline-block";
 
@@ -592,8 +606,7 @@ function addCart(event) {
 }
 
 </script>
-
-<style>
+<!-- <style>
 .highlight {
     background-color:	var(--highlighter)	;
 }
@@ -1097,6 +1110,6 @@ function addCart(event) {
     .quantity {
         width: 2rem;
     }
-}
+} 
 
-</style>
+</style>  -->
