@@ -1,40 +1,45 @@
-<h1>Cart</h1>
+<h1>Giỏ hàng</h1>
 <div class="cart-container">
     <div class="left-container">
         <div class="item-list" id="item-list">
-        </div>
+    </div>
     </div>
     <div class="right-container">
-        <div class="total-money-contaier" id="total-money">0VND</div>
+        <div class="payment-container">
+            <div class="money-container">
+                <span>Tổng cộng: </span>
+                <div class="total-money-container" id="total-money">0VND</div>
+            </div>
+            <div class="shipping-method-container">
+                <input type="radio" name="shipping" value="ship" id="ship" hidden>
+                <label for="ship" class="shipping-button">Giao hàng</label>
 
-        <div class="shipping-method-container">
-            <label>
-                <input type="radio" name="shipping" value="ship" id="ship"> Giao hàng
-            </label>
-            <label>
-                <input type="radio" name="shipping" value="takeout" id="takeout"> Tự đến lấy
-            </label>
+                <input type="radio" name="shipping" value="takeout" id="takeout" hidden>
+                <label for="takeout" class="shipping-button">Tự đến lấy</label>
+            </div>
+            <div class="payment-method-container" id="paymentMethodContainer" style="display: none;">
+                <form>
+                    <div class="method-choice-container" >
+                        <input type="radio" name="payment" id="inplace" value="inplace">
+                        <label for="inplace" class="payment-option">Thanh toán tại địa điểm giao hàng</label>
+                    </div>
+                    <div class="method-choice-container">
+                        <input type="radio" name="payment" id="transfer" value="transfer">
+                        <label for="transfer" class="payment-option">Thanh toán bằng chuyển khoản</label>
+                    </div>
+                </form>
+            </div>
+            <div class="shipping-info-container" id="shippingInfoContainer" style="display: none;">
+                <form>
+                    <div class="name-phone-container">
+                        <input type="text" id="customer_name" name="customer_name" placeholder="Tên">
+                        <input type="text" id="customer_phone" name="customer_phone" placeholder="Số điện thoại">
+                    </div>
+                    <textarea id="customer_address" name="customer_address" placeholder="Địa chỉ" style="display: none;"></textarea>
+                </form>
+            </div>
+            <button class="submit-button" id="submitButton" style="display: none;">Thanh toán</button>
         </div>
-
-        <div class="payment-method-container" id="paymentMethodContainer" style="display: none;">
-            <form>
-                <label>
-                    <input type="radio" name="payment" value="inplace"> Thanh toán tại địa điểm giao hàng
-                </label>
-                <label>
-                    <input type="radio" name="payment" value="transfer"> Thanh toán bằng chuyển khoản
-                </label>
-            </form>
-        </div>
-        <div class="shipping-info-container" id="shippingInfoContainer" style="display: none;">
-            <form>
-                <input type="text" id="customer_name" name="customer_name" placeholder="Tên">
-                <input type="text" id="customer_phone" name="customer_phone" placeholder="Số điện thoại">
-                <input type="text" id="customer_address" name="customer_address" placeholder="Địa chỉ" style="display: none;">
-            </form>
-        </div>
-        <button class="submit-button" id="submitButton" style="display: none;">Thanh toán</button>
-
     </div>
 </div>
 <div id="deleteModal" class="modal">
@@ -55,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
         radio.addEventListener('change', togglePaymentMethod);
     });
     const submitButton=document.getElementById('submitButton');
-    submitButton.addEventListener('click',paymentSubmit);
+    submitButton.addEventListener('click',  paymentSubmit);
     fetchItems(); // fetch items when the page loads
 });
 
@@ -222,7 +227,7 @@ function fetchItems() {
             const cartContainer = document.querySelector(".cart-container");
 
             if (data.length === 0) {
-                cartContainer.innerHTML = `<p class="empty-cart-message">Không có sản phẩm nào trong giỏ hàng</p>`;
+                cartContainer.innerHTML = `<p class="empty-cart-message">Không có sản phẩm nào trong giỏ hàng.</p>`;
                 return;
             }
 
@@ -236,7 +241,7 @@ function fetchItems() {
                             <img class="card-image" src="public/${item.image_path}" alt="${item.name}">
                         </div>
                         <div class="item-name-container">${item.name}</div>
-                        <div class="item-price-container">${item.price} VND</div>
+                        <div class="item-price-container">${Math.floor(item.price).toLocaleString()} VND</div>
                         <div class="quantity-container">
                             <button class="quantity-btn decrease-btn" type="button">&#8722;</button>
                             <input class="quantity" type="number" value="${item.quantity}" min="1">
@@ -261,11 +266,12 @@ function calculateTotalPrice() {
         total += price * quantity;
     });
     
-    document.getElementById('total-money').textContent=total.toLocaleString()+"VND";
+    document.getElementById('total-money').textContent=total.toLocaleString()+" VND";
 
 }
 
-function paymentSubmit() {
+function paymentSubmit(event) {
+    event.preventDefault();
     const shipOption = document.getElementById("ship");
     const takeoutOption = document.getElementById("takeout");
     const inplacePayment = document.querySelector('input[name="payment"][value="inplace"]');
@@ -339,59 +345,3 @@ function paymentSubmit() {
 }
 </script>
 
-<style>
-.item-list {
-    display: flex;
-    flex-direction: column;
-}
-.item-card {
-    height: 4rem;
-    overflow: hidden; 
-    display: flex;
-    align-items: center;
-    gap: 0.5rem; 
-    padding: 0.2rem;
-    margin: 1rem;
-    border: 4px solid black;
-
-}
-.image-container {
-    height: 100%;
-    width: auto;
-}
-.card-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.item-name-container, 
-.item-price-container {
-    font-size: 0.8rem; 
-    white-space: nowrap; 
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.modal {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    z-index: 500;
-}
-.modal-content {
-    text-align: center;
-}
-.modal-btn {
-    margin: 10px;
-    padding: 8px 16px;
-    border: none;
-    cursor: pointer;
-}
-
-</style>

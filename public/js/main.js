@@ -1,3 +1,8 @@
+function toggleNavbar() {
+    const navUl = document.querySelector('nav ul');
+    navUl.classList.toggle('show');
+}
+
 let notificationTimeout = null;
 
 function showNotification(message = "Item added to cart", isError = false) {

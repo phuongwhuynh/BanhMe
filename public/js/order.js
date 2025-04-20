@@ -110,6 +110,14 @@ function fetchProducts(page = 1) {
                 // Clear previous content
                 productList.innerHTML = "";
                 pageNumbers.innerHTML = "";
+                
+                if (data.products.length === 0) {
+                    productList.innerHTML = "<p class='no-items'>Không tìm thấy sản phẩm nào.</p>";
+                    document.getElementById("pagination").style.display = "none"; 
+                    return;
+                } else {
+                    document.getElementById("pagination").style.display = "flex";
+                }
 
                 // Add products
                 data.products.forEach(product => {

@@ -15,7 +15,7 @@ body {
 }
 
 header {
-    position: relative;
+    /* position: relative; */
     display: flex;
     flex-direction: row;
     color: var(--cream);
@@ -102,6 +102,7 @@ nav ul li {
     border-radius: 4px;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
     transition: color 0.2s ease-in-out; 
+    white-space: nowrap;
 }
 .login-button:hover {
     background-color: var(--brown1);
@@ -115,11 +116,12 @@ nav ul li {
 }
 
 .profile-icon {
+    margin: 0.5rem 0;
     width: 40px;
     height: 40px;
     border-radius: 50%;
     background-color: var(--brown1);
-    color: white;
+    color: var(--cream);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -131,20 +133,26 @@ nav ul li {
     position: absolute;
     top: 50px;
     right: 0;
-    background: white;
+    background: var(--cream);
+    color: var(--brown3);
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     padding: 10px;
     width: 150px;
 }
-.dropdown-menu a {
-    display: block;
-    padding: 8px;
+
+.dropdown-menu button {
+    padding: 0.4rem 0.6rem;
+    border-radius:0.2rem;
+    border: 1px solid var(--brown3);
     text-decoration: none;
-    color: black;
+    background-color: var(--brown3);
+    color: var(--cream);
+    font-weight: bold;
+    font-size: 0.8rem;
 }
-.dropdown-menu a:hover {
-    background-color: #f1f1f1;
+.dropdown-menu button:hover {
+    background-color: var(--brown4);
 }
 
 #notification-popup {
@@ -204,6 +212,12 @@ footer {
     font-size: medium;
     text-align: center;
 }
+.hamburger {
+    display: none;
+    font-size: 2rem;
+    cursor: pointer;
+    margin-left: 0.25rem;
+}
 @media (max-width: 1200px) {
 
 }
@@ -228,6 +242,8 @@ footer {
 
 
 @media (max-width: 768px) {
+
+    
     header {
         padding: 0rem;
     }
@@ -237,13 +253,32 @@ footer {
     .login-container {
         flex: 1;
     }
-    nav ul {
+    /* nav ul {
         flex: 2;
         flex-direction: column;
         justify-content: flex-start; 
         align-items: center;
         margin: 0.5rem 0;
+    } */
+    .hamburger {
+        display: block; /* Show hamburger in mobile */
     }
+
+    nav ul {
+        display: none; /* Hide nav items by default on mobile */
+        flex-direction: column;
+        width: 100%;
+        background-color: var(--brown3);
+    }
+
+    nav ul.show {
+        display: flex; /* Show nav items when 'show' class is toggled */
+    }
+
+    nav ul li {
+        margin: 1rem 0;
+    }
+
     nav ul li {
         margin: 0.5rem 0;
     }
@@ -252,11 +287,11 @@ footer {
 
 @media (max-width: 600px) {
 
-    nav ul {
+    /* nav ul {
         flex-direction: column;
         align-items: center;
         padding-top: 0.5rem;
-    }
+    } */
 
 
 }

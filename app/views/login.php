@@ -1,17 +1,17 @@
 <div class="login-container">
-  <h2>Login</h2>
+  <h2>Đăng nhập</h2>
   <div id="login-error" class="hidden"></div>
 
   <form onsubmit="login(event)">
-    <label for="username">Username:</label>
+    <label for="username">Tài khoản:</label>
     <input type="text" id="username" name="username" required>
     
-    <label for="password">Password:</label>
+    <label for="password">Mật khẩu:</label>
     <input type="password" id="password" name="password" required>
     
-    <button type="submit">Login</button>
+    <button type="submit">Đăng nhập</button>
   </form>
-  <p>Don't have an account? <a href="index.php?page=register">Register here!</a></p>
+  <p>Không có tài khoản? <a href="index.php?page=register">Đăng kí tại đây!</a></p>
 </div>
 
 <script>
@@ -58,25 +58,4 @@ function login(event){
 }
 </script>
 
-<style>
 
-.login-container {
-  padding: 1rem;
-}
-#login-error {
-  margin-bottom: 15px;
-  padding: 10px;
-  background-color: #dc3545; 
-  color: var(--cream);
-  border-radius: 5px;
-  text-align: center;
-  font-size: 16px;
-  font-weight: bold;
-  display: none;
-}
-
-.hidden {
-    display: none;
-}
-
-</style>

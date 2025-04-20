@@ -595,7 +595,7 @@ function addCart(event) {
 
 <style>
 .highlight {
-    background-color:	#FFDAB9	;
+    background-color:	var(--highlighter)	;
 }
 
 .order-container {

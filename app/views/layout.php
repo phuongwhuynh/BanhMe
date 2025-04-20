@@ -22,6 +22,7 @@
   <header>
     <div class="left-header">
       <a href="index.php?page=home" class="logo">Bánh Me!</a>
+
     </div>
     <nav>
       <ul>
@@ -45,12 +46,15 @@
             </div>
             <div class="dropdown-menu" id="dropdown-menu">
               <p>Xin chào, <?= $_SESSION['username']; ?>!</p>
-              <button onclick="logout()">Đăng xuất</button>
+              <button class="dropdown-btn" onclick="logout()">Đăng xuất</button>
             </div>
           </div>
       <?php else: ?>
         <a href="index.php?page=login" class="login-button">Đăng nhập</a>
       <?php endif; ?>
+      <div class="hamburger" onclick="toggleNavbar()">
+        ☰
+      </div>
     </div>
   </header>
   <main>
@@ -66,5 +70,7 @@
 
 
 </body>
+
+
 </html>
 
