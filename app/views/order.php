@@ -1,6 +1,5 @@
-<div class="order-container">
+<!-- <div class="order-container">
   <div class="left-container">
-    <!-- <div class="left-center-container"> -->
       <div class="title-container">
         <h1 class="title">Thực đơn</h1>
       </div>
@@ -23,15 +22,15 @@
           <option value="price_asc">Giá (Thấp-Cao)</option>
           <option value="price_desc">Giá (Cao-Thấp)</option>
         </select>
-      <!-- </div> -->
+      
     </div>
   </div>
-  <!-- Product List -->
+  
   <div class="right-container">
     <div class="scroll-container">
       <div id="product-list" class="products-container"></div>
 
-      <!-- Pagination -->
+      
       <div id="pagination" class="pagination">
           <button id="prevPage" class="fixed-nav">&#8592;</button>
           <div id="pageNumbers" class="page-numbers"></div>
@@ -40,7 +39,7 @@
     </div>
   </div>
 </div>
-<!-- Modal -->
+
 <div class="product-modal" id="productModal">
   <div class="modal-content">
     <img src="" id="modal-image" class="modal-image">
@@ -63,4 +62,4 @@
 
     <button class="close-modal" onclick="document.getElementById('productModal').style.display='none'">X</button>
   </div>
-</div>
+</div> -->
