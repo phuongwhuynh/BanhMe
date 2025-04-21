@@ -38,13 +38,14 @@ class PageController {
     }
     private static function loadAdminView($page){
         /*to do*/
-        $allowedPages = ['menuAdmin','log','setting'];
+        $allowedPages = ['menu','log','setting'];
         if (!in_array($page, $allowedPages)) {
             require_once "../app/views/404.php";
         }
         else {
+            $page.="Admin";
             $content =  "../app/views/$page.php";
-            require_once "../app/views/adminLayout.php";
+            require_once "../app/views/layoutAdmin.php";
         }
     }
 }

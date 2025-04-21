@@ -11,9 +11,9 @@ create table accounts (
     status ENUM('active','deleted') default 'active' not null
 );
 
--- username: admin, password:Admin123
+-- username: admin, password:Admin123.
 insert into accounts (username, password_hash, role) values 
-('admin','$2a$10$bAoFGz6RkuVAugRLAOX5d.RMX0VBwynP3iVQoiXpEOeR3JZ88XSNe', 'admin');
+('admin','$2a$10$l1YwamIKF6FTsbzJ86WFW.HRWqBzccwiv88qRovaucD.D2B51jZm.', 'admin');
 
 
 drop table if exists menu;
@@ -101,3 +101,24 @@ create table in_cart (
 
 
 
+SELECT 
+	oi.order_id, 
+	t.total_price, 
+	t.created_at, 
+    t.user_id,
+	oi.item_id, 
+	i.name AS item_name, 
+	i.image_path, 
+	i.price, 
+	oi.quantity
+FROM  
+	(SELECT 
+		o.order_id, 
+		o.total_price, 
+		o.created_at,
+        o.user_id
+	FROM orders o
+	ORDER BY o.created_at DESC
+	LIMIT 10 OFFSET 0) t 
+JOIN orders_include_items oi ON t.order_id = oi.order_id 
+JOIN menu i ON oi.item_id = i.item_id

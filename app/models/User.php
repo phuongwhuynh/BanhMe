@@ -48,7 +48,7 @@ class User {
             return ["success" => true, "message" => "Account created successfully!"];
         } catch (mysqli_sql_exception $e) {
             error_log("User::signUp error: " . $e->getMessage());
-            return ["success" => false, "message" => "An error occurred. Please try again later."];
+            return ["success" => false, "message" => $e->getMessage()];
 
         }
     

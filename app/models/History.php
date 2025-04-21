@@ -92,6 +92,7 @@ class History {
                     oi.order_id, 
                     t.total_price, 
                     t.created_at, 
+                    t.user_id,
                     oi.item_id, 
                     i.name AS item_name, 
                     i.image_path, 
@@ -101,7 +102,8 @@ class History {
                     (SELECT 
                         o.order_id, 
                         o.total_price, 
-                        o.created_at
+                        o.created_at,
+                        o.user_id
                     FROM orders o
                     ORDER BY o.created_at DESC
                     LIMIT ? OFFSET ?) t 
@@ -130,6 +132,7 @@ class History {
                 if (!isset($history[$order_id])) {
                     $history[$order_id] = [
                         'order_id' => $order_id,
+                        'user_id' => $row['user_id'],
                         'datetime' => $row['created_at'],
                         'total_price' => $row['total_price'],
                         'items' => [] // Initialize items for this order

@@ -44,14 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET['ajax']) && $_GET['ajax'
 }
 
 else {
-    
-    if ($_SESSION['user_role']=='admin'){
-        $page = isset($_GET['page']) ? $_GET['page'] : 'menuAdmin';
-        if ($page=='home') $page='menuAdmin';
-    }
-    else {
-        $page = isset($_GET['page']) ? $_GET['page'] : 'home';
-    }
+    $page = isset($_GET['page']) ? $_GET['page'] : 'home';
     PageController::loadPage($page);
 }
 

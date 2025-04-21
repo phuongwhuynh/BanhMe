@@ -40,16 +40,31 @@ let allLoaded = false;
 function renderHistoryCard(history) {
     const card = document.createElement('div');
     card.className = 'history-card';
+    
+    const timePriceDiv=document.createElement('div');
+    timePriceDiv.className="time-price-container";
+    card.appendChild(timePriceDiv);
 
     const datetimeDiv = document.createElement('div');
     datetimeDiv.className = 'datetime-container';
-    datetimeDiv.textContent = history.datetime;
-    card.appendChild(datetimeDiv);
+
+    const date = new Date(history.datetime);
+    const formattedDatetime = date.toLocaleString('vi-VN', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    });
+
+    datetimeDiv.textContent = "Thời gian: " + formattedDatetime;
+    timePriceDiv.appendChild(datetimeDiv);
 
     const totalPriceDiv = document.createElement('div');
     totalPriceDiv.className = 'total-price-container';
-    totalPriceDiv.textContent = history.total_price + 'VND';
-    card.appendChild(totalPriceDiv);
+    totalPriceDiv.textContent = 'Tổng: ' + Math.floor(history.total_price).toLocaleString() + ' VND';
+    timePriceDiv.appendChild(totalPriceDiv);
 
     // Always show the first item
     history.items.forEach((item, index) => {
@@ -58,7 +73,8 @@ function renderHistoryCard(history) {
         
         // Always show the first item
         if (index === 0) {
-            itemDiv.style.display = 'block';  // Make sure the first item is always shown
+            itemDiv.style.display = 'flex'; 
+            itemDiv.classList.add('first-item-container'); 
         } else {
             itemDiv.style.display = 'none'; // Hide other items initially
         }
@@ -76,7 +92,7 @@ function renderHistoryCard(history) {
 
         const priceDiv = document.createElement('div');
         priceDiv.className = 'item-price-container';
-        priceDiv.textContent = item.price + 'VND';
+        priceDiv.textContent = Math.floor(item.price).toLocaleString() + ' VND';
         itemDiv.appendChild(priceDiv);
 
         const quantityDiv = document.createElement('div');
@@ -91,27 +107,47 @@ function renderHistoryCard(history) {
     if (history.items.length > 1) {
         const loadMoreButton = document.createElement('button');
         loadMoreButton.className = 'load-more-button';
-        loadMoreButton.textContent = 'Xem thêm'; 
-        
-        loadMoreButton.addEventListener('click', () => {
-            // Toggle visibility of all items
-            const itemContainers = card.querySelectorAll('.item-container');
-            itemContainers.forEach((itemDiv, index) => {
-                if (index > 0) {
-                    itemDiv.style.display = 'block'; // Show hidden items
-                }
-            });
+        loadMoreButton.innerHTML = `
+            Xem thêm 
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        `;
 
-            // Change the button text
-            loadMoreButton.textContent = 'Thu lại'; // Change to collapse
-            loadMoreButton.addEventListener('click', () => {
+        let expanded = false; // Toggle state
+
+        loadMoreButton.addEventListener('click', () => {
+            const itemContainers = card.querySelectorAll('.item-container');
+            
+            if (!expanded) {
+                // Expand: show all items
                 itemContainers.forEach((itemDiv, index) => {
                     if (index > 0) {
-                        itemDiv.style.display = 'none'; // Hide items again, except the first one
+                        itemDiv.style.display = 'flex';
                     }
                 });
-                loadMoreButton.textContent = 'Xem thêm'; // Change back to show more
-            });
+                loadMoreButton.innerHTML = `
+                    Thu lại 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(180deg);">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                `;            
+            } else {
+                // Collapse: hide items again (except the first one)
+                itemContainers.forEach((itemDiv, index) => {
+                    if (index > 0) {
+                        itemDiv.style.display = 'none';
+                    }
+                });
+                loadMoreButton.innerHTML = `
+                    Xem thêm 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                `;
+            }
+
+            expanded = !expanded; // Flip the state
         });
 
         card.appendChild(loadMoreButton);
@@ -161,13 +197,14 @@ function loadHistory() {
 }
 
 function handleScroll() {
-    const historyContainer = document.getElementById('history-container'); 
-    const nearBottom = historyContainer.scrollHeight - historyContainer.scrollTop <= historyContainer.clientHeight + 100;
+
+    const mainContainer = document.querySelector('main');
+    const nearBottom = mainContainer.scrollHeight - mainContainer.scrollTop <= mainContainer.clientHeight + 100;
     
-    console.log("History Container Scroll Position:", historyContainer.scrollTop, "History Container Height:", historyContainer.scrollHeight, "History Container Client Height:", historyContainer.clientHeight); // Debugging line
+    // console.log("Main Scroll Position:", mainContainer.scrollTop, "Main Height:", mainContainer.scrollHeight, "Main Client Height:", mainContainer.clientHeight); // Debugging line
     
     if (nearBottom) {
-        console.log("Near bottom of history-container, loading more history...");
+        console.log("Near bottom of <main>, loading more history...");
         loadHistory();
     }
 }
@@ -175,36 +212,8 @@ function handleScroll() {
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Page loaded, loading initial history..."); 
     loadHistory();
-    const historyContainer = document.getElementById('history-container');
-    historyContainer.addEventListener('scroll', handleScroll); 
+    const mainContainer = document.querySelector('main');
+    mainContainer.addEventListener('scroll', handleScroll); 
 });
 
 </script>
-
-<style>
-
-#history-container {
-    display: flex;
-    flex-direction: column;
-    margin: 1rem;
-    gap: 1rem;
-    overflow-y: auto;
-}
-.history-card {
-    display: flex;
-    flex-direction: column;
-    border: 4px solid black;
-    padding: 1rem;
-}
-.item-container {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    border: 2px solid black;
-
-}
-.card-image{
-    height: 2rem;
-}
-</style>
-

@@ -1,4 +1,4 @@
-<!-- <div class="order-container">
+<div class="order-container">
   <div class="left-container">
       <div class="title-container">
         <h1 class="title">Thực đơn</h1>
@@ -22,7 +22,6 @@
           <option value="price_asc">Giá (Thấp-Cao)</option>
           <option value="price_desc">Giá (Cao-Thấp)</option>
         </select>
-      
     </div>
   </div>
   
@@ -42,24 +41,26 @@
 
 <div class="product-modal" id="productModal">
   <div class="modal-content">
-    <img src="" id="modal-image" class="modal-image">
-   <div class="modal-title">
-      <span id="modal-name" class="modal-name"></span>
-      <span id="modal-price" class="modal-price"></span>
-    </div> 
-    <p id="modal-description" class="modal-description">description</p>
-    <form id="cart-form" onsubmit="addCart(event)">
-        <input type="hidden" id="modal-item-id" name="item_id">
-        <div class="quantity-container">
-          <button class="quantity-btn disabled" type="button" id="decrease-quantity" onclick="decreaseQuantity()">&#8722;</button>
-          <input class="quantity" type="number" id="quantity" name="quantity" value="1" min="1">
-          <button class="quantity-btn" type="button" id="increase-quantity" onclick="increaseQuantity()">&#43;</button>
-        </div>
-        <div class="submit-container">
-          <button class="modal-submit" id="cart-submit" type="submit">Thêm vào giỏ hàng</button>
-        </div>
-    </form>
-
+    <div class="modal-body">
+      <img src="" id="modal-image" class="modal-image">
+      <div class="modal-title">
+        <span id="modal-name" class="modal-name"></span>
+        <span id="modal-price" class="modal-price"></span>
+      </div> 
+      <p id="modal-description" class="modal-description">description</p>
+      <form id="cart-form" onsubmit="addCart(event)">
+          <input type="hidden" id="modal-item-id" name="item_id">
+          <div class="quantity-container">
+            <button class="quantity-btn disabled" type="button" id="decrease-quantity" onclick="decreaseQuantity()">&#8722;</button>
+            <input class="quantity" type="number" id="quantity" name="quantity" value="1" min="1">
+            <button class="quantity-btn" type="button" id="increase-quantity" onclick="increaseQuantity()">&#43;</button>
+          </div>
+          <div class="submit-container">
+            <button class="modal-submit" id="cart-submit" type="submit">Thêm vào giỏ hàng</button>
+          </div>
+      </form>
+    </div>
     <button class="close-modal" onclick="document.getElementById('productModal').style.display='none'">X</button>
   </div>
-</div> -->
+
+</div>
