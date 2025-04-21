@@ -21,23 +21,23 @@
 <body data-user-role="<?= $_SESSION['user_role'] ?? '' ?>">
   <header>
     <div class="left-header">
-      <a href="index.php?page=home" class="logo">Bánh Me!</a>
+      <a href="home" class="logo">Bánh Me!</a>
 
     </div>
     <nav>
       <ul>
-      <li><a href="index.php?page=home" class="navbar-button <?php echo ($page == 'home') ? 'active' : ''; ?>">Trang chủ</a></li>
-      <li><a href="index.php?page=order" class="navbar-button <?php echo ($page == 'order') ? 'active' : ''; ?>">Thực đơn </a></li>
+      <li><a href="home" class="navbar-button <?php echo ($page == 'home') ? 'active' : ''; ?>">Trang chủ</a></li>
+      <li><a href="order" class="navbar-button <?php echo ($page == 'order') ? 'active' : ''; ?>">Thực đơn </a></li>
       <?php if ($_SESSION['user_role']==="user"): ?>
-        <li><a href="index.php?page=history" class="navbar-button <?php echo ($page == 'history') ? 'active' : ''; ?>">Lịch sử </a></li>
+        <li><a href="history" class="navbar-button <?php echo ($page == 'history') ? 'active' : ''; ?>">Lịch sử </a></li>
       <?php endif; ?>
-      <li><a href="index.php?page=contact" class="navbar-button <?php echo ($page == 'contact') ? 'active' : ''; ?>">Liên hệ</a></li>
+      <li><a href="contact" class="navbar-button <?php echo ($page == 'contact') ? 'active' : ''; ?>">Liên hệ</a></li>
 
       </ul>
     </nav>
     <div class="right-header"> 
         <?php if ($_SESSION['user_role']==="user"): ?>
-          <a href="index.php?page=cart">
+          <a href="cart">
             <img class="cart-image" src="public/images/cart.png">
           </a>
           <div class="profile-container">
@@ -50,7 +50,7 @@
             </div>
           </div>
       <?php else: ?>
-        <a href="index.php?page=login" class="login-button">Đăng nhập</a>
+        <a href="login" class="login-button">Đăng nhập</a>
       <?php endif; ?>
       <div class="hamburger" onclick="toggleNavbar()">
         ☰

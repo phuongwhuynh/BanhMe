@@ -37,6 +37,7 @@ h1 {
 .time-price-container {
     display: flex;
     flex-direction: row;
+    gap: 1rem;
     justify-content: space-between;
     margin-bottom: 0.5rem;
 }
@@ -53,8 +54,18 @@ h1 {
     border-radius: 0.1rem;
     border: 4px double var(--brown2);   
     border-top: none; 
-    justify-content: space-between;
+    /* justify-content: space-between; */
     /* box-sizing: border-box; */
+}
+
+.item-name-container {
+    flex: 2;
+}
+.item-price-container {
+    flex: 1;
+}
+.item-quantity-container {
+    flex: 1;
 }
 .first-item-container {
     border-top: 4px double var(--brown2);   

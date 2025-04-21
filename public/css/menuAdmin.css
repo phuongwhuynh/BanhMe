@@ -266,7 +266,7 @@
 .modal-content {
     background-color: var(--cream);
     width: 40rem;
-    max-height: 75vh;
+    max-height: 85vh;
     margin: 1rem;
     padding: 2rem;
     border-radius: 1rem;
@@ -280,7 +280,24 @@
     overflow-y: auto;
     overflow-x: hidden;
     flex: 1;
+    scrollbar-gutter: stable;
 }
+.modal-body::-webkit-scrollbar {
+    width: 0.3rem;
+}
+
+.modal-body::-webkit-scrollbar-track {
+    background: var(--brown1);
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background: var(--brown3);
+    border-radius: 0.25rem;
+}
+.modal-body::-webkit-scrollbar-thumb:hover {
+    background: var(--brown2); 
+}
+
 .close-modal {
     position: absolute;
     top: 0;
@@ -309,6 +326,7 @@
     border: 2px dashed var(--brown2);
     background-color: white;
     overflow: hidden;
+    margin-bottom: 0.5rem;
 }
 
 .image-wrapper.has-image {

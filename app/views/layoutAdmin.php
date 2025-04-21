@@ -24,17 +24,17 @@
 <nav class="sidebar">
   <ul>
     <li>
-      <a href="index.php?page=menu" class="<?php echo ($page == 'menuAdmin') ? 'active' : ''; ?>" title="Menu">
+      <a href="menu" class="<?php echo ($page == 'menuAdmin') ? 'active' : ''; ?>" title="Menu">
         <i class="fas fa-table"></i>
       </a>
     </li>
     <li>
-      <a href="index.php?page=log" class="<?php echo ($page == 'logAdmin') ? 'active' : ''; ?>" title="History">
+      <a href="log" class="<?php echo ($page == 'logAdmin') ? 'active' : ''; ?>" title="History">
         <i class="fas fa-receipt"></i>
       </a>
     </li>
     <li>
-      <a href="index.php?page=setting" class="<?php echo ($page == 'settingAdmin') ? 'active' : ''; ?>" title="Settings">
+      <a href="setting" class="<?php echo ($page == 'settingAdmin') ? 'active' : ''; ?>" title="Settings">
         <i class="fas fa-cog"></i>
       </a>
     </li>

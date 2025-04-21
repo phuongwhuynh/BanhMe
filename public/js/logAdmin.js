@@ -14,6 +14,11 @@ function renderHistoryCard(history) {
     const datetimeDiv = document.createElement('div');
     datetimeDiv.className = 'datetime-container';
 
+    const userIdDiv=document.createElement('div');
+    userIdDiv.textContent = "user_id: " + history.user_id;
+    timePriceDiv.appendChild(userIdDiv);
+
+
     const date = new Date(history.datetime);
     const formattedDatetime = date.toLocaleString('vi-VN', {
         day: '2-digit',
@@ -23,7 +28,6 @@ function renderHistoryCard(history) {
         minute: '2-digit',
         hour12: false
     });
-
     datetimeDiv.textContent = "Thời gian: " + formattedDatetime;
     timePriceDiv.appendChild(datetimeDiv);
 
@@ -55,8 +59,6 @@ function renderHistoryCard(history) {
         nameDiv.className = 'item-name-container';
         nameDiv.textContent = item.name;
         itemDiv.appendChild(nameDiv);
-
-
 
         const quantityDiv = document.createElement('div');
         quantityDiv.className = 'item-quantity-container';
@@ -124,6 +126,7 @@ function renderHistoryCard(history) {
     return card;
 }
 
+
 function loadHistory() {
     if (loading || allLoaded) return;
     loading = true;
@@ -134,7 +137,7 @@ function loadHistory() {
         body: JSON.stringify({
             ajax: 1,
             controller: 'history',
-            action: 'showHistory',
+            action: 'showAllHistory',
             limit: limit,
             offset: offset
         })
@@ -168,9 +171,9 @@ function handleScroll() {
 
     const mainContainer = document.querySelector('main');
     const nearBottom = mainContainer.scrollHeight - mainContainer.scrollTop <= mainContainer.clientHeight + 100;
-    
+
     // console.log("Main Scroll Position:", mainContainer.scrollTop, "Main Height:", mainContainer.scrollHeight, "Main Client Height:", mainContainer.clientHeight); // Debugging line
-    
+
     if (nearBottom) {
         console.log("Near bottom of <main>, loading more history...");
         loadHistory();

@@ -6,7 +6,6 @@ class History {
         $db = Database::connect();
     
         try {
-            // Query to get orders for the user with a limit and offset on orders only
             $stmt = $db->prepare("
                 SELECT 
                     oi.order_id, 
@@ -43,17 +42,15 @@ class History {
             $result = $stmt->get_result();
             $history = [];
     
-            // Loop through the result and organize data by order_id
             while ($row = $result->fetch_assoc()) {
                 $order_id = $row['order_id'];
     
-                // If the order isn't already in the history array, initialize it
                 if (!isset($history[$order_id])) {
                     $history[$order_id] = [
                         'order_id' => $order_id,
                         'datetime' => $row['created_at'],
                         'total_price' => $row['total_price'],
-                        'items' => [] // Initialize items for this order
+                        'items' => [] 
                     ];
                 }
     
@@ -67,10 +64,9 @@ class History {
                 ];
             }
     
-            // Return a response with the history of orders
             return [
                 'success' => true,
-                'history' => array_values($history) // Reset numeric keys for the orders
+                'history' => array_values($history) 
             ];
     
         } catch (mysqli_sql_exception $e) {
@@ -86,7 +82,6 @@ class History {
         $db = Database::connect();
     
         try {
-            // Query to get orders for the user with a limit and offset on orders only
             $stmt = $db->prepare("
                 SELECT 
                     oi.order_id, 
@@ -124,18 +119,16 @@ class History {
             $result = $stmt->get_result();
             $history = [];
     
-            // Loop through the result and organize data by order_id
             while ($row = $result->fetch_assoc()) {
                 $order_id = $row['order_id'];
     
-                // If the order isn't already in the history array, initialize it
                 if (!isset($history[$order_id])) {
                     $history[$order_id] = [
                         'order_id' => $order_id,
                         'user_id' => $row['user_id'],
                         'datetime' => $row['created_at'],
                         'total_price' => $row['total_price'],
-                        'items' => [] // Initialize items for this order
+                        'items' => [] 
                     ];
                 }
     
@@ -149,10 +142,9 @@ class History {
                 ];
             }
     
-            // Return a response with the history of orders
             return [
                 'success' => true,
-                'history' => array_values($history) // Reset numeric keys for the orders
+                'history' => array_values($history) 
             ];
     
         } catch (mysqli_sql_exception $e) {

@@ -46,9 +46,6 @@ class Order {
             $stmt->bind_param("ii", $offset, $limit);
 
         }
-    
-        // Bind parameters using the correct method
-        // Use argument unpacking for categories, followed by searchTerm, offset, and limit
 
     
         $stmt->execute();
@@ -69,7 +66,6 @@ class Order {
             return 0;
         }
     
-        // Base query
         $query = "SELECT COUNT(*) as total FROM menu WHERE status = 'active' AND cate IN (" . implode(",", array_fill(0, count($categories), "?")) . ")";
     
         // Add search condition if a search term is provided
@@ -79,8 +75,7 @@ class Order {
     
         $stmt = $db->prepare($query);
     
-        // Prepare parameter types
-        $types = str_repeat("s", count($categories)); // For categories
+        $types = str_repeat("s", count($categories)); 
     
         if (!empty($searchTerm)) {
             $searchTerm = "%$searchTerm%";

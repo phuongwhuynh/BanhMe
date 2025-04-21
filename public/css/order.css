@@ -145,7 +145,7 @@
     display: flex;
     flex: 1;
     flex-direction: column;
-    padding: 0.5rem;
+    padding: 0.2rem;
     min-height:0;
 }
 
@@ -178,7 +178,7 @@
 .products-container {
     display: grid;
     grid-template-columns: repeat(3, minmax(0,20rem)); 
-    grid-auto-rows: 18rem;  /* Each row is 18rem tall, but number of rows is dynamic */
+    grid-auto-rows: 18rem;  
     gap: 1rem;
     margin: 0 2rem;
 }
@@ -203,7 +203,7 @@
 
 .image-container {
     width: 100%;
-    aspect-ratio: 4 /3; /* Ensures a consistent shape */
+    aspect-ratio: 4 /3; 
     overflow: hidden; 
     background-color: #f0f0f0; 
 }
@@ -247,21 +247,38 @@
 .modal-content {
     background-color: var(--cream);
     width: 40rem;
-    max-height: 75vh;
+    max-height: 85vh;
     margin: 1rem;
     padding: 2rem;
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
     position: relative;
-    overflow: visible; /* important: visible! */
+    overflow: visible;
 }
 
 .modal-body {
     overflow-y: auto;
     overflow-x: hidden;
     flex: 1;
+    scrollbar-gutter: stable;
 }
+.modal-body::-webkit-scrollbar {
+    width: 0.3rem;
+}
+
+.modal-body::-webkit-scrollbar-track {
+    background: var(--brown1);
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background: var(--brown3);
+    border-radius: 0.25rem;
+}
+.modal-body::-webkit-scrollbar-thumb:hover {
+    background: var(--brown2); 
+}
+
 .close-modal {
     position: absolute;
     top: 0;

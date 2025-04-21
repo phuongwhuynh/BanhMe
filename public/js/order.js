@@ -260,7 +260,7 @@ function addCart(event) {
                     if (response.message === "Unauthorized") {
                         showNotification("You must be logged in as a user to add items to the cart. Redirecting...", true);
                         setTimeout(() => {
-                            window.location.href = "index.php?page=login";
+                            window.location.href = "login";
                         }, 2000);
                     } else {
                         alert(response.message, true);
